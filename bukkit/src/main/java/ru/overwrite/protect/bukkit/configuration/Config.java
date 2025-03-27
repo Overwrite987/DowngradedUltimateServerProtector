@@ -7,7 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import ru.overwrite.protect.bukkit.ServerProtector;
+import ru.overwrite.protect.bukkit.Main;
 import ru.overwrite.protect.bukkit.configuration.data.*;
 import ru.overwrite.protect.bukkit.utils.Utils;
 import ru.overwrite.protect.bukkit.utils.logging.Logger;
@@ -17,12 +17,12 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class Config {
+public class Config {
 
-    private final ServerProtector plugin;
+    private final Main plugin;
     private final Logger pluginLogger;
 
-    public Config(ServerProtector plugin) {
+    public Config(Main plugin) {
         this.plugin = plugin;
         this.pluginLogger = plugin.pluginLogger;
     }

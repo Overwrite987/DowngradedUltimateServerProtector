@@ -16,9 +16,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class PasswordHandler {
+public class PasswordHandler {
 
-    private final ServerProtector plugin;
+    private final Main plugin;
     private final ServerProtectorAPI api;
     private final Config pluginConfig;
 
@@ -26,7 +26,7 @@ public final class PasswordHandler {
 
     public final Map<String, BossBar> bossbars = new HashMap<>();
 
-    public PasswordHandler(ServerProtector plugin) {
+    public PasswordHandler(Main plugin) {
         this.plugin = plugin;
         this.pluginConfig = plugin.pluginConfig;
         this.api = plugin.api;

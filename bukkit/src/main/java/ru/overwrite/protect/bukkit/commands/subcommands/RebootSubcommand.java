@@ -2,12 +2,12 @@ package ru.overwrite.protect.bukkit.commands.subcommands;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import ru.overwrite.protect.bukkit.ServerProtector;
+import ru.overwrite.protect.bukkit.Main;
 
 
 public class RebootSubcommand extends AbstractSubCommand {
 
-    public RebootSubcommand(ServerProtector plugin) {
+    public RebootSubcommand(Main plugin) {
         super(plugin, "reboot", "serverprotector.reboot", false);
     }
 

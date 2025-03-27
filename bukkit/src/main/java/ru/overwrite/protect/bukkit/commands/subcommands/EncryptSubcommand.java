@@ -1,13 +1,13 @@
 package ru.overwrite.protect.bukkit.commands.subcommands;
 
 import org.bukkit.command.CommandSender;
-import ru.overwrite.protect.bukkit.ServerProtector;
+import ru.overwrite.protect.bukkit.Main;
 import ru.overwrite.protect.bukkit.configuration.data.EncryptionSettings;
 import ru.overwrite.protect.bukkit.utils.Utils;
 
 public class EncryptSubcommand extends AbstractSubCommand {
 
-    public EncryptSubcommand(ServerProtector plugin) {
+    public EncryptSubcommand(Main plugin) {
         super(plugin, "encrypt", "serverprotector.encrypt", false);
     }
 

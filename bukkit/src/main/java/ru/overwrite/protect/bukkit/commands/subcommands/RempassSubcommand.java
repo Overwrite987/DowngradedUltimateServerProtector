@@ -2,12 +2,12 @@ package ru.overwrite.protect.bukkit.commands.subcommands;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import ru.overwrite.protect.bukkit.ServerProtector;
+import ru.overwrite.protect.bukkit.Main;
 import ru.overwrite.protect.bukkit.configuration.data.UspMessages;
 
 public class RempassSubcommand extends AbstractSubCommand {
 
-    public RempassSubcommand(ServerProtector plugin) {
+    public RempassSubcommand(Main plugin) {
         super(plugin, "rempass", "serverprotector.rempass", true);
     }
 

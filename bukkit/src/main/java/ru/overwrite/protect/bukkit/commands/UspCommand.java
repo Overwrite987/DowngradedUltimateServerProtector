@@ -6,7 +6,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
-import ru.overwrite.protect.bukkit.ServerProtector;
+import ru.overwrite.protect.bukkit.Main;
 import ru.overwrite.protect.bukkit.commands.subcommands.*;
 import ru.overwrite.protect.bukkit.configuration.Config;
 import ru.overwrite.protect.bukkit.configuration.data.UspMessages;
@@ -16,20 +16,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class UspCommand implements TabExecutor {
+public class UspCommand implements TabExecutor {
 
-    private final ServerProtector plugin;
+    private final Main plugin;
     private final Config pluginConfig;
 
     private final Map<String, AbstractSubCommand> subCommands = new HashMap<>();
 
-    public UspCommand(ServerProtector plugin) {
+    public UspCommand(Main plugin) {
         this.plugin = plugin;
         this.pluginConfig = plugin.pluginConfig;
         registerSubCommands(plugin);
     }
 
-    private void registerSubCommands(ServerProtector plugin) {
+    private void registerSubCommands(Main plugin) {
         registerSubCommand(new LogoutSubcommand(plugin));
         registerSubCommand(new ReloadSubcommand(plugin));
         registerSubCommand(new RebootSubcommand(plugin));

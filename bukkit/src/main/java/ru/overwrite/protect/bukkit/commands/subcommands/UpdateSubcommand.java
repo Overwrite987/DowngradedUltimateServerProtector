@@ -2,7 +2,7 @@ package ru.overwrite.protect.bukkit.commands.subcommands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import ru.overwrite.protect.bukkit.ServerProtector;
+import ru.overwrite.protect.bukkit.Main;
 import ru.overwrite.protect.bukkit.configuration.data.SystemMessages;
 import ru.overwrite.protect.bukkit.utils.Utils;
 
@@ -15,7 +15,7 @@ import java.net.URLConnection;
 
 public class UpdateSubcommand extends AbstractSubCommand {
 
-    public UpdateSubcommand(ServerProtector plugin) {
+    public UpdateSubcommand(Main plugin) {
         super(plugin, "update", "serverprotector.update", true);
     }
 
@@ -25,7 +25,7 @@ public class UpdateSubcommand extends AbstractSubCommand {
         return true;
     }
 
-    public void checkAndUpdatePlugin(CommandSender sender, ServerProtector plugin) {
+    public void checkAndUpdatePlugin(CommandSender sender, Main plugin) {
         plugin.runner.runAsync(() -> Utils.checkUpdates(plugin, version -> {
             SystemMessages systemMessages = pluginConfig.systemMessages;
             sender.sendMessage(systemMessages.baselineDefault());

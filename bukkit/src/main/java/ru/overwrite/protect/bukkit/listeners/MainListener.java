@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import ru.overwrite.protect.bukkit.ServerProtector;
+import ru.overwrite.protect.bukkit.Main;
 import ru.overwrite.protect.bukkit.api.ServerProtectorAPI;
 import ru.overwrite.protect.bukkit.configuration.Config;
 
@@ -22,7 +22,7 @@ public class MainListener implements Listener {
     private final ServerProtectorAPI api;
     private final Config pluginConfig;
 
-    public MainListener(ServerProtector plugin) {
+    public MainListener(Main plugin) {
         this.api = plugin.api;
         this.pluginConfig = plugin.pluginConfig;
     }

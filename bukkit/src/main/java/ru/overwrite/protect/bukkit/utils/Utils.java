@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import ru.overwrite.protect.bukkit.ServerProtector;
+import ru.overwrite.protect.bukkit.Main;
 import ru.overwrite.protect.bukkit.utils.color.*;
 
 import java.io.BufferedReader;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public final class Utils {
+public class Utils {
 
     public static final int SUB_VERSION = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
 
@@ -110,7 +110,7 @@ public final class Utils {
                 c == 'X';
     }
 
-    public static void checkUpdates(ServerProtector plugin, Consumer<String> consumer) {
+    public static void checkUpdates(Main plugin, Consumer<String> consumer) {
         plugin.runner.runDelayedAsync(() -> {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                     new URL("https://raw.githubusercontent.com/Overwrite987/UltimateServerProtector/master/VERSION")

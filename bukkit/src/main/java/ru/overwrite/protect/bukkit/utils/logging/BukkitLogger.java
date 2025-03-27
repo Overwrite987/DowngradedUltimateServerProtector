@@ -1,13 +1,13 @@
 package ru.overwrite.protect.bukkit.utils.logging;
 
 
-import ru.overwrite.protect.bukkit.ServerProtector;
+import ru.overwrite.protect.bukkit.Main;
 
 public class BukkitLogger implements Logger {
 
-    private final ServerProtector plugin;
+    private final Main plugin;
 
-    public BukkitLogger(ServerProtector plugin) {
+    public BukkitLogger(Main plugin) {
         this.plugin = plugin;
     }
 

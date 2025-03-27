@@ -47,7 +47,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-public final class ServerProtector extends JavaPlugin {
+public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {

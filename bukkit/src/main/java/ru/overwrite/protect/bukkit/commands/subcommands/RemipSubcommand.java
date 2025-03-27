@@ -1,14 +1,14 @@
 package ru.overwrite.protect.bukkit.commands.subcommands;
 
 import org.bukkit.command.CommandSender;
-import ru.overwrite.protect.bukkit.ServerProtector;
+import ru.overwrite.protect.bukkit.Main;
 import ru.overwrite.protect.bukkit.configuration.data.UspMessages;
 
 import java.util.List;
 
 public class RemipSubcommand extends AbstractSubCommand {
 
-    public RemipSubcommand(ServerProtector plugin) {
+    public RemipSubcommand(Main plugin) {
         super(plugin, "remip", "serverprotector.remip", true);
     }
 
