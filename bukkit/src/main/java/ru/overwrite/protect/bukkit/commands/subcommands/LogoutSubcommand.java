@@ -15,13 +15,13 @@ public class LogoutSubcommand extends AbstractSubCommand {
 
     @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
-        UspMessages uspMessages = pluginConfig.getUspMessages();
+        UspMessages uspMessages = pluginConfig.uspMessages;
         if (!(sender instanceof Player player)) {
             sender.sendMessage(uspMessages.playerOnly());
             return false;
         }
         if (api.isAuthorised(player)) {
-            plugin.getRunner().run(() -> {
+            plugin.runner.run(() -> {
                 new ServerProtectorLogoutEvent(player, Utils.getIp(player)).callEvent();
                 api.deauthorisePlayer(player);
             });

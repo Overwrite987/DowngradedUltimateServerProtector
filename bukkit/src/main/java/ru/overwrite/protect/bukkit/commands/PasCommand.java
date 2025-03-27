@@ -19,23 +19,23 @@ public final class PasCommand implements CommandExecutor {
 
     public PasCommand(ServerProtectorManager plugin) {
         this.plugin = plugin;
-        this.pluginConfig = plugin.getPluginConfig();
-        this.passwordHandler = plugin.getPasswordHandler();
-        this.api = plugin.getApi();
+        this.pluginConfig = plugin.pluginConfig;
+        this.passwordHandler = plugin.passwordHandler;
+        this.api = plugin.api;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            plugin.getPluginLogger().info(pluginConfig.getMessages().playerOnly());
+            plugin.pluginLogger.info(pluginConfig.messages.playerOnly());
             return true;
         }
         if (!api.isCaptured(player)) {
-            sender.sendMessage(pluginConfig.getMessages().noNeed());
+            sender.sendMessage(pluginConfig.messages.noNeed());
             return true;
         }
         if (args.length == 0) {
-            sender.sendMessage(pluginConfig.getMessages().cantBeNull());
+            sender.sendMessage(pluginConfig.messages.cantBeNull());
             return true;
         }
         passwordHandler.checkPassword(player, args[0], false);

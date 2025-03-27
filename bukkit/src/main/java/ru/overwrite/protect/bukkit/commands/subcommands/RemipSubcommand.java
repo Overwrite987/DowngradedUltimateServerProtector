@@ -14,9 +14,9 @@ public class RemipSubcommand extends AbstractSubCommand {
 
     @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
-        UspMessages uspMessages = pluginConfig.getUspMessages();
+        UspMessages uspMessages = pluginConfig.uspMessages;
         if (args.length > 2 && (args[1] != null && args[2] != null)) {
-            List<String> ipwl = pluginConfig.getAccessData().ipWhitelist().get(args[1]);
+            List<String> ipwl = pluginConfig.accessData.ipWhitelist().get(args[1]);
             if (ipwl.isEmpty()) {
                 sender.sendMessage(uspMessages.playerNotFound().replace("%nick%", args[1]));
             }

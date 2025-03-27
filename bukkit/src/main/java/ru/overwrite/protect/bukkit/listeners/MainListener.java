@@ -23,15 +23,15 @@ public class MainListener implements Listener {
     private final Config pluginConfig;
 
     public MainListener(ServerProtectorManager plugin) {
-        this.api = plugin.getApi();
-        this.pluginConfig = plugin.getPluginConfig();
+        this.api = plugin.api;
+        this.pluginConfig = plugin.pluginConfig;
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onMove(PlayerMoveEvent e) {
         if (!api.isAnybodyCaptured())
             return;
-        if (pluginConfig.getBlockingSettings().allowOrientationChange() && hasChangedOrientation(e.getFrom(), e.getTo()) && !hasChangedPosition(e.getFrom(), e.getTo())) {
+        if (pluginConfig.blockingSettings.allowOrientationChange() && hasChangedOrientation(e.getFrom(), e.getTo()) && !hasChangedPosition(e.getFrom(), e.getTo())) {
             return;
         }
         Player player = e.getPlayer();
@@ -61,7 +61,7 @@ public class MainListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onItemDrop(PlayerDropItemEvent e) {
         Player player = e.getPlayer();
-        if (pluginConfig.getBlockingSettings().blockItemDrop()) {
+        if (pluginConfig.blockingSettings.blockItemDrop()) {
             api.handleInteraction(player, e);
         }
     }
@@ -70,7 +70,7 @@ public class MainListener implements Listener {
     public void onItemPickup(EntityPickupItemEvent e) {
         if (!(e.getEntity() instanceof Player player))
             return;
-        if (pluginConfig.getBlockingSettings().blockItemPickup()) {
+        if (pluginConfig.blockingSettings.blockItemPickup()) {
             api.handleInteraction(player, e);
         }
     }
@@ -79,7 +79,7 @@ public class MainListener implements Listener {
     public void onPlayerDamage(EntityDamageEvent e) {
         if (!(e.getEntity() instanceof Player player))
             return;
-        if (pluginConfig.getBlockingSettings().blockDamage()) {
+        if (pluginConfig.blockingSettings.blockDamage()) {
             api.handleInteraction(player, e);
         }
     }
@@ -88,7 +88,7 @@ public class MainListener implements Listener {
     public void onPlayerDamageEntity(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player player))
             return;
-        if (pluginConfig.getBlockingSettings().blockDamagingEntity()) {
+        if (pluginConfig.blockingSettings.blockDamagingEntity()) {
             api.handleInteraction(player, e);
         }
     }
@@ -96,7 +96,7 @@ public class MainListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onInventoryOpen(InventoryOpenEvent e) {
         Player player = (Player) e.getPlayer();
-        if (pluginConfig.getBlockingSettings().blockInventoryOpen()) {
+        if (pluginConfig.blockingSettings.blockInventoryOpen()) {
             api.handleInteraction(player, e);
         }
     }

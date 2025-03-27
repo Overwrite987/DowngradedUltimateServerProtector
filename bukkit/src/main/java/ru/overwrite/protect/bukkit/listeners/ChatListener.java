@@ -22,9 +22,9 @@ public class ChatListener implements Listener {
 
     public ChatListener(ServerProtectorManager plugin) {
         this.plugin = plugin;
-        this.pluginConfig = plugin.getPluginConfig();
-        this.passwordHandler = plugin.getPasswordHandler();
-        this.api = plugin.getApi();
+        this.pluginConfig = plugin.pluginConfig;
+        this.passwordHandler = plugin.passwordHandler;
+        this.api = plugin.api;
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -33,7 +33,7 @@ public class ChatListener implements Listener {
         if (!api.isCaptured(player)) {
             return;
         }
-        if (!pluginConfig.getMainSettings().useCommand()) {
+        if (!pluginConfig.mainSettings.useCommand()) {
             String message = e.getMessage();
             passwordHandler.checkPassword(player, message, true);
         }
@@ -49,15 +49,15 @@ public class ChatListener implements Listener {
         }
         String message = e.getMessage();
         String label = cutCommand(message);
-        if (pluginConfig.getMainSettings().useCommand()) {
-            if (label.equalsIgnoreCase("/" + pluginConfig.getMainSettings().pasCommand())) {
-                if (!plugin.isPaper()) {
+        if (pluginConfig.mainSettings.useCommand()) {
+            if (label.equalsIgnoreCase("/" + pluginConfig.mainSettings.pasCommand())) {
+                if (!plugin.paper) {
                     passwordHandler.checkPassword(player, message.split(" ", 1)[1], false);
                 }
                 return;
             }
         }
-        List<String> allowedCommands = pluginConfig.getAccessData().allowedCommands();
+        List<String> allowedCommands = pluginConfig.accessData.allowedCommands();
         for (int i = 0; i < allowedCommands.size(); i++) {
             final String command = allowedCommands.get(i);
             if (label.equalsIgnoreCase(command) || message.equalsIgnoreCase(command)) {

@@ -14,15 +14,15 @@ public class TabCompleteListener implements Listener {
     private final Config pluginConfig;
 
     public TabCompleteListener(ServerProtectorManager plugin) {
-        this.api = plugin.getApi();
-        this.pluginConfig = plugin.getPluginConfig();
+        this.api = plugin.api;
+        this.pluginConfig = plugin.pluginConfig;
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onTabComplete(AsyncTabCompleteEvent e) {
         if (!(e.getSender() instanceof Player player))
             return;
-        if (pluginConfig.getBlockingSettings().blockTabComplete()) {
+        if (pluginConfig.blockingSettings.blockTabComplete()) {
             api.handleInteraction(player, e);
         }
     }

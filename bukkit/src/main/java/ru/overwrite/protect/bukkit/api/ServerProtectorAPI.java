@@ -23,8 +23,8 @@ public final class ServerProtectorAPI {
 
     public ServerProtectorAPI(@NotNull ServerProtectorManager plugin) {
         this.plugin = plugin;
-        this.pluginConfig = plugin.getPluginConfig();
-        this.pluginLogger = plugin.getPluginLogger();
+        this.pluginConfig = plugin.pluginConfig;
+        this.pluginLogger = plugin.pluginLogger;
     }
 
     public boolean isAnybodyCaptured() {
@@ -82,19 +82,19 @@ public final class ServerProtectorAPI {
     }
 
     public boolean isAuthorised(@NotNull Player player) {
-        return pluginConfig.getSessionSettings().session() ?
+        return pluginConfig.sessionSettings.session() ?
                 hasSession(player) :
                 saved.contains(player.getName());
     }
 
     public boolean isAuthorised(@NotNull Player player, @NotNull String ip) {
-        return pluginConfig.getSessionSettings().session() ?
+        return pluginConfig.sessionSettings.session() ?
                 hasSession(player, ip) :
                 saved.contains(player.getName());
     }
 
     public boolean isAuthorised(@NotNull String playerName, @NotNull String ip) {
-        return pluginConfig.getSessionSettings().session() ?
+        return pluginConfig.sessionSettings.session() ?
                 hasSession(playerName, ip) :
                 saved.contains(playerName);
     }
@@ -132,7 +132,7 @@ public final class ServerProtectorAPI {
             pluginLogger.warn("Unable to authorise " + player.getName() + " Reason: Already authorised");
             return;
         }
-        if (pluginConfig.getSessionSettings().session()) {
+        if (pluginConfig.sessionSettings.session()) {
             sessions.put(player.getName(), Utils.getIp(player));
             return;
         }
@@ -148,7 +148,7 @@ public final class ServerProtectorAPI {
             pluginLogger.warn("Unable to authorise " + player.getName() + " Reason: Already authorised");
             return;
         }
-        if (pluginConfig.getSessionSettings().session()) {
+        if (pluginConfig.sessionSettings.session()) {
             sessions.put(player.getName(), ip);
             return;
         }
@@ -164,7 +164,7 @@ public final class ServerProtectorAPI {
             pluginLogger.warn("Unable to authorise " + playerName + " Reason: Already authorised");
             return;
         }
-        if (pluginConfig.getSessionSettings().session()) {
+        if (pluginConfig.sessionSettings.session()) {
             sessions.put(playerName, ip);
             return;
         }
@@ -180,7 +180,7 @@ public final class ServerProtectorAPI {
             pluginLogger.warn("Unable to deauthorise " + player.getName() + " Reason: Is not authorised");
             return;
         }
-        if (pluginConfig.getSessionSettings().session()) {
+        if (pluginConfig.sessionSettings.session()) {
             sessions.remove(player.getName());
             return;
         }

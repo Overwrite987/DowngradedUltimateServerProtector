@@ -28,14 +28,14 @@ public class ConnectionListener implements Listener {
 
     public ConnectionListener(ServerProtectorManager plugin) {
         this.plugin = plugin;
-        this.api = plugin.getApi();
-        this.pluginConfig = plugin.getPluginConfig();
-        this.runner = plugin.getRunner();
+        this.api = plugin.api;
+        this.pluginConfig = plugin.pluginConfig;
+        this.runner = plugin.runner;
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPreLogin(AsyncPlayerPreLoginEvent e) {
-        if (!plugin.isSafe()) {
+        if (!plugin.safe) {
             plugin.logUnsafe();
             e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
         }
@@ -54,18 +54,18 @@ public class ConnectionListener implements Listener {
             }
             if (captureReason != null) {
                 final String ip = e.getAddress().getHostAddress();
-                if (pluginConfig.getSecureSettings().enableIpWhitelist()) {
-                    if (!isIPAllowed(ip, pluginConfig.getAccessData().ipWhitelist().get(playerName))) {
-                        if (pluginConfig.getExcludedPlayers() == null || !plugin.isExcluded(player, pluginConfig.getExcludedPlayers().ipWhitelist())) {
-                            plugin.checkFail(playerName, pluginConfig.getCommands().notAdminIp());
+                if (pluginConfig.secureSettings.enableIpWhitelist()) {
+                    if (!isIPAllowed(ip, pluginConfig.accessData.ipWhitelist().get(playerName))) {
+                        if (pluginConfig.excludedPlayers == null || !plugin.isExcluded(player, pluginConfig.excludedPlayers.ipWhitelist())) {
+                            plugin.checkFail(playerName, pluginConfig.commands.notAdminIp());
                         }
                     }
                 }
-                if (pluginConfig.getSessionSettings().session() && !api.hasSession(playerName, ip)) {
-                    if (pluginConfig.getExcludedPlayers() == null || !plugin.isExcluded(player, pluginConfig.getExcludedPlayers().adminPass())) {
+                if (pluginConfig.sessionSettings.session() && !api.hasSession(playerName, ip)) {
+                    if (pluginConfig.excludedPlayers == null || !plugin.isExcluded(player, pluginConfig.excludedPlayers.adminPass())) {
                         ServerProtectorCaptureEvent captureEvent = new ServerProtectorCaptureEvent(player, ip, captureReason);
                         captureEvent.callEvent();
-                        if (pluginConfig.getApiSettings().allowCancelCaptureEvent() && captureEvent.isCancelled()) {
+                        if (pluginConfig.apiSettings.allowCancelCaptureEvent() && captureEvent.isCancelled()) {
                             return;
                         }
                         api.capturePlayer(playerName);
@@ -82,15 +82,15 @@ public class ConnectionListener implements Listener {
             CaptureReason captureReason = plugin.checkPermissions(player);
             if (captureReason != null) {
                 if (api.isCaptured(player)) {
-                    if (pluginConfig.getEffectSettings().enableEffects()) {
+                    if (pluginConfig.effectSettings.enableEffects()) {
                         plugin.giveEffects(player);
                     }
                     plugin.applyHide(player);
                 }
-                if (pluginConfig.getLoggingSettings().loggingJoin()) {
-                    plugin.logAction(pluginConfig.getLogMessages().joined(), player, LocalDateTime.now());
+                if (pluginConfig.loggingSettings.loggingJoin()) {
+                    plugin.logAction(pluginConfig.logMessages.joined(), player, LocalDateTime.now());
                 }
-                plugin.sendAlert(player, pluginConfig.getBroadcasts().joined());
+                plugin.sendAlert(player, pluginConfig.broadcasts.joined());
             }
         });
     }
@@ -149,21 +149,21 @@ public class ConnectionListener implements Listener {
             for (PotionEffect effect : player.getActivePotionEffects()) {
                 player.removePotionEffect(effect.getType());
             }
-            if (pluginConfig.getPunishSettings().enableRejoin()) {
+            if (pluginConfig.punishSettings.enableRejoin()) {
                 rejoins.put(playerName, rejoins.getOrDefault(playerName, 0) + 1);
                 if (isMaxRejoins(playerName)) {
                     rejoins.remove(playerName);
-                    plugin.checkFail(playerName, pluginConfig.getCommands().failedRejoin());
+                    plugin.checkFail(playerName, pluginConfig.commands.failedRejoin());
                 }
             }
         }
-        plugin.getPerPlayerTime().remove(playerName);
+        plugin.perPlayerTime.remove(playerName);
         api.unsavePlayer(playerName);
     }
 
     private boolean isMaxRejoins(String playerName) {
         if (!rejoins.containsKey(playerName))
             return false;
-        return rejoins.get(playerName) > pluginConfig.getPunishSettings().maxRejoins();
+        return rejoins.get(playerName) > pluginConfig.punishSettings.maxRejoins();
     }
 }

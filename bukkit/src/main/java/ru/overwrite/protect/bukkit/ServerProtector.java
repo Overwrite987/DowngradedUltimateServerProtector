@@ -26,29 +26,29 @@ public final class ServerProtector extends ServerProtectorManager {
         registerListeners(pluginManager);
         registerCommands(pluginManager, mainSettings);
         startTasks(config);
-        logEnableDisable(getPluginConfig().getLogMessages().enabled(), LocalDateTime.now());
+        logEnableDisable(pluginConfig.logMessages.enabled(), LocalDateTime.now());
         if (mainSettings.getBoolean("enable-metrics", true)) {
             new Metrics(this, 13347);
         }
         checkForUpdates(mainSettings);
         long endTime = System.currentTimeMillis();
-        getPluginLogger().info("Plugin started in " + (endTime - startTime) + " ms");
+        pluginLogger.info("Plugin started in " + (endTime - startTime) + " ms");
     }
 
     @Override
     public void onDisable() {
-        if (getMessageFile() != null) {
-            logEnableDisable(getPluginConfig().getLogMessages().disabled(), LocalDateTime.now());
+        if (messageFile != null) {
+            logEnableDisable(pluginConfig.logMessages.disabled(), LocalDateTime.now());
         }
-        if (getPluginConfig().getMessageSettings().enableBroadcasts()) {
+        if (pluginConfig.messageSettings.enableBroadcasts()) {
             for (Player onlinePlayer : server.getOnlinePlayers()) {
-                if (onlinePlayer.hasPermission("serverprotector.admin") && getMessageFile() != null) {
-                    onlinePlayer.sendMessage(getPluginConfig().getBroadcasts().disabled());
+                if (onlinePlayer.hasPermission("serverprotector.admin") && messageFile != null) {
+                    onlinePlayer.sendMessage(pluginConfig.broadcasts.disabled());
                 }
             }
         }
-        getRunner().cancelTasks();
-        if (getPluginMessage() != null) {
+        runner.cancelTasks();
+        if (pluginMessage != null) {
             Messenger messenger = server.getMessenger();
             messenger.unregisterOutgoingPluginChannel(this);
             messenger.unregisterIncomingPluginChannel(this);

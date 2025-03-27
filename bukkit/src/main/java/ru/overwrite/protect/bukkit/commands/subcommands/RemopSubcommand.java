@@ -16,10 +16,10 @@ public class RemopSubcommand extends AbstractSubCommand {
 
     @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
-        UspMessages uspMessages = pluginConfig.getUspMessages();
+        UspMessages uspMessages = pluginConfig.uspMessages;
         if (args.length > 1) {
             String nickname = args[1];
-            List<String> wl = pluginConfig.getAccessData().opWhitelist();
+            List<String> wl = pluginConfig.accessData.opWhitelist();
             if (!wl.remove(nickname)) {
                 sender.sendMessage(uspMessages.playerNotFound().replace("%nick%", nickname));
             }

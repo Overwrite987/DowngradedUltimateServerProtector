@@ -111,13 +111,13 @@ public final class Utils {
     }
 
     public static void checkUpdates(ServerProtectorManager plugin, Consumer<String> consumer) {
-        plugin.getRunner().runDelayedAsync(() -> {
+        plugin.runner.runDelayedAsync(() -> {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                     new URL("https://raw.githubusercontent.com/Overwrite987/UltimateServerProtector/master/VERSION")
                             .openStream()))) {
                 consumer.accept(reader.readLine().trim());
             } catch (IOException ex) {
-                plugin.getPluginLogger().warn("Unable to check for updates: " + ex.getMessage());
+                plugin.pluginLogger.warn("Unable to check for updates: " + ex.getMessage());
             }
         }, 10);
     }

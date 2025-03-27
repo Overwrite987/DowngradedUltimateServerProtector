@@ -1,7 +1,5 @@
 package ru.overwrite.protect.bukkit.configuration;
 
-import lombok.AccessLevel;
-import lombok.Getter;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.configuration.ConfigurationSection;
@@ -19,20 +17,17 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Getter
 public final class Config {
 
-    @Getter(AccessLevel.NONE)
     private final ServerProtectorManager plugin;
-    @Getter(AccessLevel.NONE)
     private final Logger pluginLogger;
 
     public Config(ServerProtectorManager plugin) {
         this.plugin = plugin;
-        this.pluginLogger = plugin.getPluginLogger();
+        this.pluginLogger = plugin.pluginLogger;
     }
 
-    private Map<String, String> perPlayerPasswords;
+    public Map<String, String> perPlayerPasswords;
 
     public void setupPasswords(FileConfiguration dataFile) {
         perPlayerPasswords = new ConcurrentHashMap<>();
@@ -54,17 +49,17 @@ public final class Config {
                     dataFile.set("data." + nick + ".encrypted-pass", encryptedPas);
                     dataFile.set("data." + nick + ".pass", null);
                     shouldSave = true;
-                    plugin.setDataFile(dataFile);
+                    plugin.dataFile = dataFile;
                 }
             }
             perPlayerPasswords.put(playerNick, data.getString(nick + ".encrypted-pass"));
         }
         if (shouldSave) {
-            save(plugin.getDataFilePath(), dataFile, plugin.getDataFileName());
+            save(plugin.dataFilePath, dataFile, plugin.dataFileName);
         }
     }
 
-    private MainSettings mainSettings;
+    public MainSettings mainSettings;
 
     public void loadMainSettings(FileConfiguration config, FileConfiguration configFile) {
         ConfigurationSection mainSettings = config.getConfigurationSection("main-settings");
@@ -78,7 +73,7 @@ public final class Config {
             section.set("enable-admin-commands", false);
             section.set("check-interval", 40);
             section.set("papi-support", false);
-            save(plugin.getDataFilePath(), configFile, "config.yml");
+            save(plugin.dataFilePath, configFile, "config.yml");
             pluginLogger.info("Created section main-settings");
             mainSettings = configFile.getConfigurationSection("main-settings");
         }
@@ -92,7 +87,7 @@ public final class Config {
         );
     }
 
-    private EncryptionSettings encryptionSettings;
+    public EncryptionSettings encryptionSettings;
 
     public void loadEncryptionSettings(FileConfiguration config, FileConfiguration configFile) {
         ConfigurationSection encryptionSettings = config.getConfigurationSection("encryption-settings");
@@ -104,7 +99,7 @@ public final class Config {
             section.set("old-encrypt-methods", List.of());
             section.set("salt-length", 24);
             section.set("auto-encrypt-passwords", true);
-            save(plugin.getDataFilePath(), configFile, "config.yml");
+            save(plugin.dataFilePath, configFile, "config.yml");
             pluginLogger.info("Created section encryption-settings");
             encryptionSettings = configFile.getConfigurationSection("encryption-settings");
         }
@@ -137,7 +132,7 @@ public final class Config {
         return oldMethods;
     }
 
-    private GeyserSettings geyserSettings;
+    public GeyserSettings geyserSettings;
 
     public void loadGeyserSettings(FileConfiguration config, FileConfiguration configFile) {
         ConfigurationSection geyserSettings = config.getConfigurationSection("geyser-settings");
@@ -146,7 +141,7 @@ public final class Config {
             ConfigurationSection section = configFile.createSection("geyser-settings");
             section.set("geyser-prefix", ".");
             section.set("geyser-nicknames", List.of("test99999"));
-            save(plugin.getDataFilePath(), configFile, "config.yml");
+            save(plugin.dataFilePath, configFile, "config.yml");
             pluginLogger.info("Created section geyser-settings");
             geyserSettings = configFile.getConfigurationSection("geyser-settings");
         }
@@ -156,7 +151,7 @@ public final class Config {
         );
     }
 
-    private BlockingSettings blockingSettings;
+    public BlockingSettings blockingSettings;
 
     public void loadAdditionalChecks(FileConfiguration config, FileConfiguration configFile) {
         ConfigurationSection blockingSettings = config.getConfigurationSection("blocking-settings");
@@ -172,7 +167,7 @@ public final class Config {
             section.set("hide-on-entering", true);
             section.set("hide-other-on-entering", true);
             section.set("allow-orientation-change", false);
-            save(plugin.getDataFilePath(), configFile, "config.yml");
+            save(plugin.dataFilePath, configFile, "config.yml");
             pluginLogger.info("Created section blocking-settings");
             blockingSettings = configFile.getConfigurationSection("blocking-settings");
         }
@@ -189,7 +184,7 @@ public final class Config {
         );
     }
 
-    private SessionSettings sessionSettings;
+    public SessionSettings sessionSettings;
 
     public void loadSessionSettings(FileConfiguration config, FileConfiguration configFile) {
         ConfigurationSection sessionSettings = config.getConfigurationSection("session-settings");
@@ -199,7 +194,7 @@ public final class Config {
             section.set("session", true);
             section.set("session-time-enabled", true);
             section.set("session-time", 21600);
-            save(plugin.getDataFilePath(), configFile, "config.yml");
+            save(plugin.dataFilePath, configFile, "config.yml");
             pluginLogger.info("Created section session-settings");
             sessionSettings = configFile.getConfigurationSection("session-settings");
         }
@@ -210,7 +205,7 @@ public final class Config {
         );
     }
 
-    private PunishSettings punishSettings;
+    public PunishSettings punishSettings;
 
     public void loadPunishSettings(FileConfiguration config, FileConfiguration configFile) {
         ConfigurationSection punishSettings = config.getConfigurationSection("punish-settings");
@@ -223,7 +218,7 @@ public final class Config {
             section.set("time", 60);
             section.set("enable-rejoin", true);
             section.set("max-rejoins", 3);
-            save(plugin.getDataFilePath(), configFile, "config.yml");
+            save(plugin.dataFilePath, configFile, "config.yml");
             pluginLogger.info("Created section punish-settings");
             punishSettings = configFile.getConfigurationSection("punish-settings");
         }
@@ -237,7 +232,7 @@ public final class Config {
         );
     }
 
-    private SecureSettings secureSettings;
+    public SecureSettings secureSettings;
 
     public void loadSecureSettings(FileConfiguration config, FileConfiguration configFile) {
         ConfigurationSection secureSettings = config.getConfigurationSection("secure-settings");
@@ -250,7 +245,7 @@ public final class Config {
             section.set("enable-ip-whitelist", false);
             section.set("only-console-usp", false);
             section.set("enable-excluded-players", false);
-            save(plugin.getDataFilePath(), configFile, "config.yml");
+            save(plugin.dataFilePath, configFile, "config.yml");
             pluginLogger.info("Created section secure-settings");
             secureSettings = configFile.getConfigurationSection("secure-settings");
         }
@@ -264,7 +259,7 @@ public final class Config {
         );
     }
 
-    private ApiSettings apiSettings;
+    public ApiSettings apiSettings;
 
     public void loadApiSettings(FileConfiguration config, FileConfiguration configFile) {
         ConfigurationSection apiSettings = config.getConfigurationSection("api-settings");
@@ -274,7 +269,7 @@ public final class Config {
             section.set("allow-cancel-capture-event", false);
             section.set("call-event-on-password-enter", false);
             section.set("allowed-auth-api-calls-packages", List.of());
-            save(plugin.getDataFilePath(), configFile, "config.yml");
+            save(plugin.dataFilePath, configFile, "config.yml");
             pluginLogger.info("Created section api-settings");
             apiSettings = configFile.getConfigurationSection("api-settings");
         }
@@ -285,7 +280,7 @@ public final class Config {
         );
     }
 
-    private MessageSettings messageSettings;
+    public MessageSettings messageSettings;
 
     public void loadMessageSettings(FileConfiguration config, FileConfiguration configFile) {
         ConfigurationSection messageSettings = config.getConfigurationSection("message-settings");
@@ -295,7 +290,7 @@ public final class Config {
             section.set("send-titles", true);
             section.set("enable-broadcasts", true);
             section.set("enable-console-broadcasts", true);
-            save(plugin.getDataFilePath(), configFile, "config.yml");
+            save(plugin.dataFilePath, configFile, "config.yml");
             pluginLogger.info("Created section message-settings");
             messageSettings = configFile.getConfigurationSection("message-settings");
         }
@@ -306,7 +301,7 @@ public final class Config {
         );
     }
 
-    private BossbarSettings bossbarSettings;
+    public BossbarSettings bossbarSettings;
 
     public void loadBossbarSettings(FileConfiguration config, FileConfiguration configFile) {
         ConfigurationSection bossbarSettings = config.getConfigurationSection("bossbar-settings");
@@ -316,11 +311,11 @@ public final class Config {
             section.set("enable-bossbar", false);
             section.set("bar-color", "RED");
             section.set("bar-style", "SEGMENTED_12");
-            save(plugin.getDataFilePath(), configFile, "config.yml");
+            save(plugin.dataFilePath, configFile, "config.yml");
             pluginLogger.info("Created section bossbar-settings");
             bossbarSettings = configFile.getConfigurationSection("bossbar-settings");
         }
-        ConfigurationSection bossbar = plugin.getMessageFile().getConfigurationSection("bossbar");
+        ConfigurationSection bossbar = plugin.messageFile.getConfigurationSection("bossbar");
         String bossbarMessage = getMessage(bossbar, "message");
 
         this.bossbarSettings = new BossbarSettings(
@@ -331,7 +326,7 @@ public final class Config {
         );
     }
 
-    private SoundSettings soundSettings;
+    public SoundSettings soundSettings;
 
     public void loadSoundSettings(FileConfiguration config, FileConfiguration configFile) {
         ConfigurationSection soundSettings = config.getConfigurationSection("sound-settings");
@@ -342,7 +337,7 @@ public final class Config {
             section.set("on-capture", "ENTITY_ITEM_BREAK;1.0;1.0");
             section.set("on-pas-fail", "ENTITY_VILLAGER_NO;1.0;1.0");
             section.set("on-pas-correct", "ENTITY_PLAYER_LEVELUP;1.0;1.0");
-            save(plugin.getDataFilePath(), configFile, "config.yml");
+            save(plugin.dataFilePath, configFile, "config.yml");
             pluginLogger.info("Created section sound-settings");
             soundSettings = configFile.getConfigurationSection("sound-settings");
         }
@@ -354,7 +349,7 @@ public final class Config {
         );
     }
 
-    private EffectSettings effectSettings;
+    public EffectSettings effectSettings;
 
     public void loadEffects(FileConfiguration config, FileConfiguration configFile) {
         ConfigurationSection effectSettings = config.getConfigurationSection("effect-settings");
@@ -363,7 +358,7 @@ public final class Config {
             ConfigurationSection section = configFile.createSection("effect-settings");
             section.set("enable-effects", true);
             section.set("effects", List.of("BLINDNESS;3"));
-            save(plugin.getDataFilePath(), configFile, "config.yml");
+            save(plugin.dataFilePath, configFile, "config.yml");
             pluginLogger.info("Created section effect-settings");
             effectSettings = configFile.getConfigurationSection("effect-settings");
         }
@@ -389,7 +384,7 @@ public final class Config {
         return effectList;
     }
 
-    private LoggingSettings loggingSettings;
+    public LoggingSettings loggingSettings;
 
     public void loadLoggingSettings(FileConfiguration config, FileConfiguration configFile) {
         ConfigurationSection loggingSettings = config.getConfigurationSection("logging-settings");
@@ -400,7 +395,7 @@ public final class Config {
             section.set("logging-join", true);
             section.set("logging-enable-disable", true);
             section.set("logging-command-execution", true);
-            save(plugin.getDataFilePath(), configFile, "config.yml");
+            save(plugin.dataFilePath, configFile, "config.yml");
             pluginLogger.info("Created section logging-settings");
             loggingSettings = configFile.getConfigurationSection("logging-settings");
         }
@@ -412,7 +407,7 @@ public final class Config {
         );
     }
 
-    private Commands commands;
+    public Commands commands;
 
     public void loadFailCommands(FileConfiguration config, FileConfiguration configFile) {
         ConfigurationSection commands = config.getConfigurationSection("commands");
@@ -426,7 +421,7 @@ public final class Config {
             section.set("failed-pass", List.of());
             section.set("failed-time", List.of());
             section.set("failed-rejoin", List.of());
-            save(plugin.getDataFilePath(), configFile, "config.yml");
+            save(plugin.dataFilePath, configFile, "config.yml");
             pluginLogger.info("Created section main-settings");
             commands = configFile.getConfigurationSection("commands");
         }
@@ -441,7 +436,7 @@ public final class Config {
         );
     }
 
-    private AccessData accessData;
+    public AccessData accessData;
 
     public void loadAccessData(FileConfiguration config) {
         Set<String> perms = new HashSet<>(config.getStringList("permissions"));
@@ -468,7 +463,7 @@ public final class Config {
         this.accessData = new AccessData(perms, allowedCommands, opWhitelist, blacklistedPerms, ipWhitelist);
     }
 
-    private ExcludedPlayers excludedPlayers;
+    public ExcludedPlayers excludedPlayers;
 
     public void setupExcluded(FileConfiguration config) {
         if (config.getBoolean("secure-settings.enable-excluded-players")) {
@@ -482,7 +477,7 @@ public final class Config {
         }
     }
 
-    private UspMessages uspMessages;
+    public UspMessages uspMessages;
 
     public void loadUspMessages(FileConfiguration message) {
         ConfigurationSection uspmsg = message.getConfigurationSection("uspmsg");
@@ -520,7 +515,7 @@ public final class Config {
         );
     }
 
-    private Messages messages;
+    public Messages messages;
 
     public void loadMsgMessages(FileConfiguration message) {
         ConfigurationSection msg = message.getConfigurationSection("msg");
@@ -534,7 +529,7 @@ public final class Config {
         );
     }
 
-    private Titles titles;
+    public Titles titles;
 
     public void loadTitleMessages(FileConfiguration message) {
         ConfigurationSection titles = message.getConfigurationSection("titles");
@@ -545,7 +540,7 @@ public final class Config {
         );
     }
 
-    private Broadcasts broadcasts;
+    public Broadcasts broadcasts;
 
     public void loadBroadcastMessages(FileConfiguration message) {
         ConfigurationSection broadcasts = message.getConfigurationSection("broadcasts");
@@ -558,7 +553,7 @@ public final class Config {
         );
     }
 
-    private LogMessages logMessages;
+    public LogMessages logMessages;
 
     public void loadLogFormats(FileConfiguration message) {
         ConfigurationSection logMessages = message.getConfigurationSection("log-format");
@@ -573,7 +568,7 @@ public final class Config {
         );
     }
 
-    private SystemMessages systemMessages;
+    public SystemMessages systemMessages;
 
     public void loadSystemMessages(FileConfiguration message) {
         ConfigurationSection system = message.getConfigurationSection("system");
@@ -610,7 +605,7 @@ public final class Config {
     }
 
     public void save(String path, FileConfiguration config, String fileName) {
-        plugin.getRunner().runAsync(() -> {
+        plugin.runner.runAsync(() -> {
             try {
                 config.save(new File(path, fileName));
             } catch (IOException ex) {

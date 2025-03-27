@@ -17,7 +17,7 @@ public class SetpassSubcommand extends AbstractSubCommand {
 
     @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
-        UspMessages uspMessages = pluginConfig.getUspMessages();
+        UspMessages uspMessages = pluginConfig.uspMessages;
         if (args.length > 1) {
             String nickname = args[1];
 
@@ -44,8 +44,8 @@ public class SetpassSubcommand extends AbstractSubCommand {
     }
 
     private void addAdmin(String nick, String pas) {
-        FileConfiguration dataFile = pluginConfig.getFile(plugin.getDataFilePath(), plugin.getDataFileName());
-        EncryptionSettings encryptionSettings = pluginConfig.getEncryptionSettings();
+        FileConfiguration dataFile = pluginConfig.getFile(plugin.dataFilePath, plugin.dataFileName);
+        EncryptionSettings encryptionSettings = pluginConfig.encryptionSettings;
         if (!encryptionSettings.enableEncryption()) {
             dataFile.set("data." + nick + ".pass", pas);
         } else if (encryptionSettings.autoEncryptPasswords()) {
@@ -54,7 +54,7 @@ public class SetpassSubcommand extends AbstractSubCommand {
         } else {
             dataFile.set("data." + nick + ".encrypted-pass", pas);
         }
-        pluginConfig.save(plugin.getDataFilePath(), dataFile, plugin.getDataFileName());
-        plugin.setDataFile(dataFile);
+        pluginConfig.save(plugin.dataFilePath, dataFile, plugin.dataFileName);
+        plugin.dataFile = dataFile;
     }
 }

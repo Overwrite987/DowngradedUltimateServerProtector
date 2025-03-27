@@ -17,7 +17,7 @@ public class AddopSubcommand extends AbstractSubCommand {
 
     @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
-        UspMessages uspMessages = pluginConfig.getUspMessages();
+        UspMessages uspMessages = pluginConfig.uspMessages;
         if (args.length > 1) {
             String nickname = args[1];
 
@@ -30,7 +30,7 @@ public class AddopSubcommand extends AbstractSubCommand {
                 nickname = targetPlayer.getName();
             }
 
-            List<String> whitelist = pluginConfig.getAccessData().opWhitelist();
+            List<String> whitelist = pluginConfig.accessData.opWhitelist();
             whitelist.add(nickname);
             plugin.getConfig().set("op-whitelist", whitelist);
             plugin.saveConfig();

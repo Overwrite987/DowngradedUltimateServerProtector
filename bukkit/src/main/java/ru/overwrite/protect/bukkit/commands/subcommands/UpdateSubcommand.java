@@ -23,8 +23,8 @@ public class UpdateSubcommand extends AbstractSubCommand {
     }
 
     public void checkAndUpdatePlugin(CommandSender sender, ServerProtectorManager plugin) {
-        plugin.getRunner().runAsync(() -> Utils.checkUpdates(plugin, version -> {
-            SystemMessages systemMessages = pluginConfig.getSystemMessages();
+        plugin.runner.runAsync(() -> Utils.checkUpdates(plugin, version -> {
+            SystemMessages systemMessages = pluginConfig.systemMessages;
             sender.sendMessage(systemMessages.baselineDefault());
 
             String currentVersion = plugin.getDescription().getVersion();

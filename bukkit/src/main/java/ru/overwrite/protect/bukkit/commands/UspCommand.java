@@ -19,7 +19,7 @@ public final class UspCommand implements TabExecutor {
 
     public UspCommand(ServerProtectorManager plugin) {
         this.plugin = plugin;
-        this.pluginConfig = plugin.getPluginConfig();
+        this.pluginConfig = plugin.pluginConfig;
         registerSubCommands(plugin);
     }
 
@@ -38,7 +38,7 @@ public final class UspCommand implements TabExecutor {
     }
 
     private void registerSubCommand(AbstractSubCommand subCmd) {
-        subCommands.put(subCmd.getName(), subCmd);
+        subCommands.put(subCmd.name, subCmd);
     }
 
     @Override
@@ -49,17 +49,17 @@ public final class UspCommand implements TabExecutor {
         }
         AbstractSubCommand subCommand = subCommands.get(args[0].toLowerCase());
         if (subCommand != null) {
-            if (subCommand.isAdminCommand()) {
-                if (!pluginConfig.getMainSettings().enableAdminCommands()) {
+            if (subCommand.adminCommand) {
+                if (!pluginConfig.mainSettings.enableAdminCommands()) {
                     sendHelp(sender, label);
                     return false;
                 }
-                if (pluginConfig.getSecureSettings().onlyConsoleUsp() && !(sender instanceof ConsoleCommandSender)) {
-                    sender.sendMessage(pluginConfig.getUspMessages().consoleOnly());
+                if (pluginConfig.secureSettings.onlyConsoleUsp() && !(sender instanceof ConsoleCommandSender)) {
+                    sender.sendMessage(pluginConfig.uspMessages.consoleOnly());
                     return false;
                 }
             }
-            if (!sender.hasPermission(subCommand.getPermission())) {
+            if (!sender.hasPermission(subCommand.permission)) {
                 sendHelp(sender, label);
                 return false;
             }
@@ -74,7 +74,7 @@ public final class UspCommand implements TabExecutor {
     }
 
     private void sendHelp(CommandSender sender, String label) {
-        UspMessages uspMessages = pluginConfig.getUspMessages();
+        UspMessages uspMessages = pluginConfig.uspMessages;
         sendCmdMessage(sender, uspMessages.usage(), label, "protect");
         sendCmdMessage(sender, uspMessages.usageLogout(), label, "protect");
         if (!sender.hasPermission("admin")) {
@@ -82,10 +82,10 @@ public final class UspCommand implements TabExecutor {
         }
         sendCmdMessage(sender, uspMessages.usageReload(), label, "reload");
         sendCmdMessage(sender, uspMessages.usageReboot(), label, "reboot");
-        if (pluginConfig.getEncryptionSettings().enableEncryption()) {
+        if (pluginConfig.encryptionSettings.enableEncryption()) {
             sendCmdMessage(sender, uspMessages.usageEncrypt(), label, "encrypt");
         }
-        if (!pluginConfig.getMainSettings().enableAdminCommands()) {
+        if (!pluginConfig.mainSettings.enableAdminCommands()) {
             sender.sendMessage(uspMessages.otherDisabled());
             return;
         }
@@ -105,7 +105,7 @@ public final class UspCommand implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
-        if (pluginConfig.getSecureSettings().onlyConsoleUsp() && !(sender instanceof ConsoleCommandSender)) {
+        if (pluginConfig.secureSettings.onlyConsoleUsp() && !(sender instanceof ConsoleCommandSender)) {
             return List.of();
         }
         final List<String> completions = new ArrayList<>();
@@ -113,10 +113,10 @@ public final class UspCommand implements TabExecutor {
             completions.add("logout");
             completions.add("reload");
             completions.add("reboot");
-            if (pluginConfig.getEncryptionSettings().enableEncryption()) {
+            if (pluginConfig.encryptionSettings.enableEncryption()) {
                 completions.add("encrypt");
             }
-            if (pluginConfig.getMainSettings().enableAdminCommands()) {
+            if (pluginConfig.mainSettings.enableAdminCommands()) {
                 completions.add("setpass");
                 completions.add("rempass");
                 completions.add("addop");

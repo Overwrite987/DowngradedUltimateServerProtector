@@ -1,8 +1,5 @@
 package ru.overwrite.protect.bukkit;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.Server;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.PluginCommand;
@@ -48,41 +45,37 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-@Getter
 public class ServerProtectorManager extends JavaPlugin {
 
-    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("'['dd-MM-yyyy']' HH:mm:ss -");
+    public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("'['dd-MM-yyyy']' HH:mm:ss -");
 
-    private final Logger pluginLogger = Utils.FOLIA ?
+    public final Logger pluginLogger = Utils.FOLIA ?
             new PaperLogger(this) :
             new BukkitLogger(this);
 
-    private boolean paper;
+    public boolean paper;
 
-    private FileConfiguration messageFile;
+    public FileConfiguration messageFile;
 
-    @Setter
-    private FileConfiguration dataFile;
-    private String dataFileName;
-    private String dataFilePath;
-    private final Config pluginConfig = new Config(this);
-    private final ServerProtectorAPI api = new ServerProtectorAPI(this);
-    private final PasswordHandler passwordHandler = new PasswordHandler(this);
-    private final Runner runner = Utils.FOLIA ? new PaperRunner(this) : new BukkitRunner(this);
+    public FileConfiguration dataFile;
+    public String dataFileName;
+    public String dataFilePath;
+    public final Config pluginConfig = new Config(this);
+    public final ServerProtectorAPI api = new ServerProtectorAPI(this);
+    public final PasswordHandler passwordHandler = new PasswordHandler(this);
+    public final Runner runner = Utils.FOLIA ? new PaperRunner(this) : new BukkitRunner(this);
 
-    private PluginMessage pluginMessage;
+    public PluginMessage pluginMessage;
 
-    private final Map<String, Integer> perPlayerTime = new ConcurrentHashMap<>();
+    public final Map<String, Integer> perPlayerTime = new ConcurrentHashMap<>();
 
-    @Getter(AccessLevel.NONE)
     private File logFile;
 
-    @Getter(AccessLevel.NONE)
     public final Server server = getServer();
 
     public void checkPaper() {
         if (server.getName().equals("CraftBukkit")) {
-            SystemMessages systemMessages = pluginConfig.getSystemMessages();
+            SystemMessages systemMessages = pluginConfig.systemMessages;
             runner.runPeriodical(() -> {
                 pluginLogger.info(systemMessages.baselineWarn());
                 pluginLogger.info(systemMessages.paper1());
@@ -94,8 +87,7 @@ public class ServerProtectorManager extends JavaPlugin {
         this.paper = true;
     }
 
-    @Getter
-    private boolean safe;
+    public boolean safe;
 
     public void checkSafe(PluginManager pluginManager) {
         if (server.spigot().getConfig().getBoolean("settings.bungeecord")) {
@@ -110,7 +102,7 @@ public class ServerProtectorManager extends JavaPlugin {
     }
 
     public void logUnsafe() {
-        SystemMessages systemMessages = pluginConfig.getSystemMessages();
+        SystemMessages systemMessages = pluginConfig.systemMessages;
         pluginLogger.info(systemMessages.baselineWarn());
         pluginLogger.info(systemMessages.bungeecord1());
         pluginLogger.info(systemMessages.bungeecord2());
@@ -192,7 +184,7 @@ public class ServerProtectorManager extends JavaPlugin {
         pluginManager.registerEvents(new ChatListener(this), this);
         pluginManager.registerEvents(new ConnectionListener(this), this);
         pluginManager.registerEvents(new MainListener(this), this);
-        if (paper && pluginConfig.getBlockingSettings().blockTabComplete()) {
+        if (paper && pluginConfig.blockingSettings.blockTabComplete()) {
             pluginManager.registerEvents(new TabCompleteListener(this), this);
         }
     }
@@ -220,18 +212,18 @@ public class ServerProtectorManager extends JavaPlugin {
 
     public void startTasks(FileConfiguration config) {
         TaskManager taskManager = new TaskManager(this);
-        taskManager.startMainCheck(pluginConfig.getMainSettings().checkInterval());
+        taskManager.startMainCheck(pluginConfig.mainSettings.checkInterval());
         taskManager.startCapturesMessages(config);
-        if (pluginConfig.getPunishSettings().enableTime()) {
+        if (pluginConfig.punishSettings.enableTime()) {
             taskManager.startCapturesTimer();
         }
-        if (pluginConfig.getSecureSettings().enableNotAdminPunish()) {
+        if (pluginConfig.secureSettings.enableNotAdminPunish()) {
             taskManager.startAdminCheck();
         }
-        if (pluginConfig.getSecureSettings().enableOpWhitelist()) {
+        if (pluginConfig.secureSettings.enableOpWhitelist()) {
             taskManager.startOpCheck();
         }
-        if (pluginConfig.getSecureSettings().enablePermissionBlacklist()) {
+        if (pluginConfig.secureSettings.enablePermissionBlacklist()) {
             taskManager.startPermsCheck();
         }
     }
@@ -252,7 +244,7 @@ public class ServerProtectorManager extends JavaPlugin {
             return;
         }
         Utils.checkUpdates(this, version -> {
-            SystemMessages systemMessages = pluginConfig.getSystemMessages();
+            SystemMessages systemMessages = pluginConfig.systemMessages;
             pluginLogger.info(systemMessages.baselineDefault());
             if (getDescription().getVersion().equals(version)) {
                 pluginLogger.info(systemMessages.updateLatest());
@@ -272,9 +264,9 @@ public class ServerProtectorManager extends JavaPlugin {
         runner.run(() -> {
             for (String command : commands) {
                 server.dispatchCommand(server.getConsoleSender(), command.replace("%player%", playerName));
-                if (pluginConfig.getLoggingSettings().loggingCommandExecution()) {
+                if (pluginConfig.loggingSettings.loggingCommandExecution()) {
                     LocalDateTime date = LocalDateTime.now();
-                    logToFile(pluginConfig.getLogMessages().command()
+                    logToFile(pluginConfig.logMessages.command()
                             .replace("%player%", playerName)
                             .replace("%cmd%", command)
                             .replace("%date%", date.format(TIME_FORMATTER)));
@@ -283,7 +275,6 @@ public class ServerProtectorManager extends JavaPlugin {
         });
     }
 
-    @Getter(AccessLevel.NONE)
     private final Map<String, Collection<PotionEffect>> oldEffects = new HashMap<>();
 
     public void giveEffects(Player player) {
@@ -291,8 +282,8 @@ public class ServerProtectorManager extends JavaPlugin {
             if (!player.getActivePotionEffects().isEmpty()) {
                 oldEffects.put(player.getName(), player.getActivePotionEffects());
             }
-            player.addPotionEffects(pluginConfig.getEffectSettings().effects());
-            for (PotionEffect effect : pluginConfig.getEffectSettings().effects()) {
+            player.addPotionEffects(pluginConfig.effectSettings.effects());
+            for (PotionEffect effect : pluginConfig.effectSettings.effects()) {
                 player.addPotionEffect(effect);
             }
         }, player);
@@ -314,7 +305,7 @@ public class ServerProtectorManager extends JavaPlugin {
     }
 
     public void applyHide(Player player) {
-        if (pluginConfig.getBlockingSettings().hideOnEntering()) {
+        if (pluginConfig.blockingSettings.hideOnEntering()) {
             runner.runPlayer(() -> {
                 for (Player onlinePlayer : server.getOnlinePlayers()) {
                     if (!onlinePlayer.equals(player)) {
@@ -323,7 +314,7 @@ public class ServerProtectorManager extends JavaPlugin {
                 }
             }, player);
         }
-        if (pluginConfig.getBlockingSettings().hideOtherOnEntering()) {
+        if (pluginConfig.blockingSettings.hideOtherOnEntering()) {
             runner.runPlayer(() -> {
                 for (Player onlinePlayer : server.getOnlinePlayers()) {
                     player.hidePlayer(this, onlinePlayer);
@@ -345,7 +336,7 @@ public class ServerProtectorManager extends JavaPlugin {
         if (player.hasPermission("serverprotector.protect")) {
             return new CaptureReason("serverprotector.protect");
         }
-        for (String perm : pluginConfig.getAccessData().perms()) {
+        for (String perm : pluginConfig.accessData.perms()) {
             if (player.hasPermission(perm)) {
                 return new CaptureReason(perm);
             }
@@ -354,17 +345,17 @@ public class ServerProtectorManager extends JavaPlugin {
     }
 
     public boolean isExcluded(Player player, List<String> list) {
-        return pluginConfig.getSecureSettings().enableExcludedPlayers() && list.contains(player.getName());
+        return pluginConfig.secureSettings.enableExcludedPlayers() && list.contains(player.getName());
     }
 
     public boolean isAdmin(String nick) {
-        return pluginConfig.getPerPlayerPasswords().containsKey(nick);
+        return pluginConfig.perPlayerPasswords.containsKey(nick);
     }
 
     public void sendAlert(Player player, String msg) {
-        if (pluginConfig.getMessageSettings().enableBroadcasts()) {
+        if (pluginConfig.messageSettings.enableBroadcasts()) {
             msg = msg.replace("%player%", player.getName()).replace("%ip%", Utils.getIp(player));
-            if (pluginConfig.getMainSettings().papiSupport()) {
+            if (pluginConfig.mainSettings.papiSupport()) {
                 msg = PAPIUtils.parsePlaceholders(player, msg);
             }
             for (Player onlinePlayer : server.getOnlinePlayers()) {
@@ -376,9 +367,9 @@ public class ServerProtectorManager extends JavaPlugin {
                 pluginMessage.sendCrossProxy(player, msg);
             }
         }
-        if (pluginConfig.getMessageSettings().enableConsoleBroadcasts()) {
+        if (pluginConfig.messageSettings.enableConsoleBroadcasts()) {
             msg = msg.replace("%player%", player.getName()).replace("%ip%", Utils.getIp(player));
-            if (pluginConfig.getMainSettings().papiSupport()) {
+            if (pluginConfig.mainSettings.papiSupport()) {
                 msg = PAPIUtils.parsePlaceholders(player, msg);
             }
             server.getConsoleSender().sendMessage(msg);
@@ -415,11 +406,11 @@ public class ServerProtectorManager extends JavaPlugin {
         if (className.startsWith("ru.overwrite.protect.bukkit")) {
             return true;
         }
-        if (pluginConfig.getApiSettings().allowedAuthApiCallsPackages().isEmpty()) {
+        if (pluginConfig.apiSettings.allowedAuthApiCallsPackages().isEmpty()) {
             pluginLogger.warn("Found illegal method call from " + className);
             return false;
         }
-        for (String allowed : pluginConfig.getApiSettings().allowedAuthApiCallsPackages()) {
+        for (String allowed : pluginConfig.apiSettings.allowedAuthApiCallsPackages()) {
             if (className.startsWith(allowed)) {
                 return true;
             }
