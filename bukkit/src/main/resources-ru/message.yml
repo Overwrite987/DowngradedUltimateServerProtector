@@ -1,0 +1,86 @@
+# Сообщения которые будет выводиться людям при вводе команды и при наличии админ-прав
+msg: 
+  message: '%prefix% &fУ вас обнаружены админ-права. Вы должны ввести админ-пароль!'
+  incorrect: '%prefix% &cВведенный тобой пароль неверен!'
+  correct: '%prefix% &aПароль верный. Добро пожаловать на сервер.'
+  noneed: '%prefix% &fВам не нужно вводить админ-пароль или он уже был введен.'
+  cantbenull: '%prefix% &fПас не может быть пустым.'
+  playeronly: '%prefix% &fТолько для игроков'
+
+# Оповещения для консоли и администраторов сервера
+broadcasts:
+  failed: '%prefix% &fАдминистратор &3%player% &fввел админ-пас &cнеудачно! &fIP адрес: &c%ip%'
+  passed: '%prefix% &fАдминистратор &3%player% &fввел админ-пас &aуспешно! &fIP адрес: &c%ip%'
+  joined: '%prefix% &fАдминистратор &3%player% &fвошел в игру. &fIP адрес: &c%ip%'
+  captured: '%prefix% &fИгрок &3%player% &fбыл пойман с админ-правами! &fIP адрес: &c%ip%'
+  disabled: '%prefix% &6&lВнимание! &fПлагин был отключен!'
+  
+# Сообщения которые будут высвечиваться на экране
+titles:
+  message: '&e&l⚠ &c&lЗащита &e&l⚠;&fОбнаружены админ-права! Вводи админ-пароль!;10;60;15'
+  incorrect: '&e&l⚠ &c&lЗащита &e&l⚠;&cПароль неверен!;10;60;15'
+  correct: '&e&l⚠ &c&lЗащита &e&l⚠;&aПароль верный. Добро пожаловать.;10;60;15'
+  
+# Сообщение в босс-баре
+bossbar:
+  message: '&fОсталось: &c%time% секунд'
+
+# Сообщение при вводе команды /usp (админ-команд)
+uspmsg:
+  consoleonly: '&cДанная команда может быть исполнена только из консоли!'
+  playeronly: '&cДанная команда может быть исполнена только игроком!'
+  logout: '&aВаша сессия была сброшена'
+  reloaded: '&aПлагин перезагружен'
+  rebooted: '&aПлагин перезапущен'
+  playernotfound: '&cАккаунт %nick% не найден в системе!'
+  alreadyinconfig: '&aДанный аккаунт уже находится в конфиге'
+  notinconfig: '&cДанный аккаунт не находится в конфиге'
+  playeradded: '&aИгрок %nick% успешно добавлен'
+  playerremoved: '&aИгрок успешно удалён'
+  ipadded: '&aIP %ip% успешно добавлен'
+  setpassusage: '&f/%cmd% setpass (ник) (пароль)'
+  addopusage: '&f/%cmd% addop (ник)'
+  addipusage: '&f/%cmd% addip (ip)'
+  rempassusage: '&f/%cmd% rempass (ник)'
+  remopusage: '&f/%cmd% remop (ник)'
+  remipusage: '&f/%cmd% rempip (ip)'
+  usage: '&7&l> &7Использование:'
+  usage-logout: '&6/%cmd% logout&7 - завешить сессию'
+  usage-reload: '&6/%cmd% reload&7 - перезагрузить конфиг'
+  usage-reboot: '&6/%cmd% reboot&7 - перезапустить плагин'
+  usage-encrypt: '&6/%cmd% encrypt (password)&7 - показать зашифрованную версию указанного пароля'
+  usage-setpass: '&6/%cmd% setpass (ник) (пароль) &7- установить пароль игроку'
+  usage-rempass: '&6/%cmd% rempass (ник) &7- удалить пароль игроку'
+  usage-addop: '&6/%cmd% addop (ник) &7- добавить игрока в op-whitelist'
+  usage-remop: '&6/%cmd% remop (ник) &7- удалить игрока из op-whitelist'
+  usage-addip: '&6/%cmd% addip (ник) (ip) &7- добавить игрока и его ip в ip-whitelist'
+  usage-remip: '&6/%cmd% remip (ник) (ip) &7- удалить игрока и его ip из ip-whitelist'
+  otherdisabled: |- 
+    &7Прочие команды отключены.
+    &7Для их включения выставьте &6enable-admin-commands: &atrue
+
+# Как сообщения будут отображаться в логах
+log-format:
+  enabled: '%date% [UltimateServerProtector - плагин включён]'
+  disabled: '%date% [UltimateServerProtector - плагин выключён]'
+  failed: '%date% Администратор %player% ввел админ-пас неудачно! IP адрес: %ip%'
+  passed: '%date% Администратор %player% ввел админ-пас успешно! IP адрес: %ip%'
+  joined: '%date% Администратор %player% вошел в игру. IP адрес: %ip%'
+  captured: '%date% Игрок %player% был пойман с админ-правами! IP адрес: %ip%'
+  command: '%date% Плагин исполнил команду: %cmd%'
+
+# Системные сообщения
+system:
+  baseline-warn: "§6============= §c! ВНИМАНИЕ ! §6============="
+  baseline-default: "§6========================================"
+  paper-1: "§eВы используете нестабильное ядро для вашего сервера Minecraft! Рекомендуется использовать §aPaper"
+  paper-2: "§eСкачать Paper: §ahttps://papermc.io/downloads/all"
+  bungeecord-1: "§eУ вас включена настройка §6bungeecord§a, но плагин §6BungeeGuard §eне установлен!"
+  bungeecord-2: "§eБез этого плагина вы подвергаете себя §cопасности! §eУстановите его для дальнейшей безопасной работы."
+  bungeecord-3: "§eСкачать BungeeGuard: §ahttps://www.spigotmc.org/resources/bungeeguard.79601/"
+  update-latest: "§aВы используете последнюю версию плагина!"
+  update-success-1: "§aОбновление было загружено успешно!"
+  update-success-2: "§aПерезапустите сервер, чтобы применить обновление."
+  update-outdated-1: "§aВы используете устаревшую версию плагина!"
+  update-outdated-2: "§aВы можете скачать новую версию здесь:"
+  update-outdated-3: "§bgithub.com/Overwrite987/UltimateServerProtector/releases/"

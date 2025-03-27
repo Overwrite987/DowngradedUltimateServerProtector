@@ -1,0 +1,318 @@
+# Main settings
+main-settings:
+  # Text formatting.
+  # LEGACY - color using & and hex &#
+  # LEGACY_ADVANCED - an improved version of LEGACY with support for &## hex format
+  # MINIMESSAGE - color using <color> (introduced in newer versions (1.17+))
+  serializer: LEGACY
+  # If set to true - messages will be broadcasted to all servers on the proxy network.
+  proxy: false
+  # Plugin prefix
+  prefix: '&f&l[&c&lProtection&f&l]'
+  # If set to false, players need to type the password in the chat
+  use-command: true
+  # Password input command. (specified without / at the beginning) (default - pas) (command is not going to be registered on Spigot)
+  pas-command: 'pas'
+  # Enable commands for adding new players to the config
+  enable-admin-commands: false
+  # Send anonymous statistics (advised not to disable)
+  enable-metrics: true
+  # Check for updates (advised not to disable)
+  update-checker: true
+  # Main check interval in ticks (do not touch if you don't know how it works)
+  check-interval: 40
+  # Should PlaceholderAPI be supported in plugin messages?
+  # Applies only to messages involving a player
+  papi-support: false
+
+# Encryption settings
+encryption-settings:
+  # Whether to enable encryption
+  # When encryption is enabled, the password in data.yml must be specified in an already encrypted format and in a separate field encrypted-pass:
+  # To see what the password will look like in encrypted form, you can use the command /usp encrypt <password>
+  # However, if the auto-encrypt-passwords option is enabled, you can specify a regular password in the old pass: format in data.yml, and the plugin will automatically convert it.
+  enable-encryption: false
+  # Password encryption method (Supported types: BASE64, SHA224, SHA256, SHA384, SHA512, SHA3-224, SHA3-256, SHA3-384, SHA3-512)
+  # BASE64 - This "encryption" does not provide data protection; it is simply a method of converting data to another format for network transmission or storage.
+  # Use BASE64 only if you're afraid of "accidentally showing the file with passwords on the demo" and you don't need to specifically hide the data or to make encryption more complicated
+  # SHA256 and other SHA - variations of the SHA algorithm.
+  # Use SHA256 if you want to securely hide passwords without the possibility of decryption, and SHA512 for even more effective encryption
+  # SHA3-256 and other SHA3 - an analogue of the usual SHA with a modified encryption algorithm.
+  # Use SHA3 if you want to make non-standard and at the same time strong encryption
+  # You can use 2 or more encryption methods simultaneously for greater security of your passwords, so they cannot be easily brute-forced
+  # Encryption will be performed in order 1;2;3 and so on. It's important - deep encryption can take a lot of time, so don't use too many of them
+  # SALT is used to apply salt (random string to an existing password). You can only apply it once.
+  encrypt-method: 'BASE64;SALT;SHA256'
+  # If you used any encryption method and for some reason decide to change it - you can specify it here so that you don't lose data
+  old-encrypt-methods: []
+  # The length of the dynamically generated salt. The longer it is, the more effectively passwords are protected.
+  salt-length: 24
+  # Enable automatic encryption of all existing passwords from the data.yml file when the plugin starts and restarts
+  # This function will automatically convert all passwords from the pass: format to the encrypted-pass: format, encrypting the existing passwords
+  # If there is a lot of data in the file, automatic encryption can take a long time! Disable it in case of problems.
+  auto-encrypt-passwords: true
+
+# File settings
+file-settings:
+  # Players data file name. (default - data.yml)
+  data-file: 'data.yml'
+  # Log file name. (default - log.yml)
+  log-file: 'log.yml'
+  # If this setting is enabled, you need to specify the full path to the file
+  # Example: root/server/plugins/UltimateServerProtector/data.yml
+  use-full-path: false
+  # Path to the data.yml file
+  data-file-path: '/root/server/plugins/UltimateServerProtector/'
+  # Path to the log.yml file
+  log-file-path: '/root/server/plugins/UltimateServerProtector/'
+
+# Customization for floodgate + geyser users (with special characters)
+geyser-settings:
+  # The symbol that all players from the hip (put '' if there is no symbol, then the check will be disabled)
+  geyser-prefix: '.'
+  # Nicknames of players who are players from Bedrock (if this nickname is recorded in data.yml, a symbol will be automatically added to it during password verification)
+  geyser-nicknames:
+    - 'test99999'
+
+# Additional blocking settings
+blocking-settings:
+  # Block item dropping
+  block-item-drop: true
+  # Block item pickup
+  block-item-pickup: true
+  # Block tab-complete (works against /ver + tab)
+  block-tab-complete: true
+  # Make the player invulnerable during password input
+  block-damage: true
+  # Block the ability to cause damage to mobs and players during password input
+  block-damaging-entity: true
+  # Block the ability to open inventories during password input (menus, etc.)
+  block-inventory-open: false
+  # Whether to hide the player from the tab list when entering a password
+  hide-on-entering: true
+  # Whether to hide other players from the person entering the password
+  hide-other-on-entering: true
+  # Whether to allow you to move camera while entering a password
+  allow-orientation-change: false
+
+# Session settings
+session-settings:
+  # Save player data so they don't have to enter the admin password again
+  session: true
+  # Delete player data after some time
+  session-time-enabled: false
+  # Time after which data about a registered player will be deleted in seconds (countdown starts from the password input moment)
+  session-time: 21600 #(6 hours)
+
+# Punishment settings
+punish-settings:
+  # Enable punishments for incorrectly entered admin password
+  enable-attempts: true
+  # Maximum number of admin password entry attempts
+  max-attempts: 3
+  # Enable time for entering admin password
+  enable-time: true
+  # Time in seconds within which the player must enter the admin password
+  time: 60
+  # Enable punishments for rejoin to the server if a player exits without entering the admin password
+  enable-rejoin: true
+  # Maximum number of rejoins to the server if a player exits without entering correct admin password
+  max-rejoins: 3
+
+# Enhanced security settings
+secure-settings:
+  # Apply punishments to operators not listed in the whitelist
+  enable-op-whitelist: false
+  # Apply punishments to those who have admin rights but are not in the config
+  enable-notadmin-punish: false
+  # Apply punishments to people with forbidden permissions
+  enable-permission-blacklist: false
+  # Enable IPWhitelist for administrators
+  enable-ip-whitelist: false
+  # Allow using the /usp command only from the console
+  only-console-usp: false
+  # Shutdown the server if the plugin is disabled
+  shutdown-on-disable: true
+  # Allow certain players to enter the game without an admin password (disabled by default and unsafe)
+  enable-excluded-players: false
+
+# Api settings
+api-settings:
+  # Whether to allow canceling ServerProtectorCaptureEvent? (Disabled by default for security reasons)
+  allow-cancel-capture-event: false
+  # Should ServerProtectorPasswordEnterEvent be triggered when the player enters a password? (Disabled by default for security reasons)
+  call-event-on-password-enter: false
+  # From which packages is the invocation of authorization methods allowed from the API?
+  # Calls to API methods from other packages will be blocked. (By default, only calls from our plugin are allowed)
+  allowed-auth-api-calls-packages: []
+
+# Message display settings
+message-settings:
+  # Delay between auto-messages and titles in seconds
+  delay: 2
+  # Enable full-screen messages
+  send-titles: true
+  # Enable notifications for administrators
+  enable-broadcasts: true
+  # Enable notifications for the console
+  enable-console-broadcasts: true
+
+# Bossbar settings (only works if login time is enabled)
+bossbar-settings:
+  # Enable bossbar
+  enable-bossbar: true
+  # Bossbar color (PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE)
+  bar-color: RED
+  # Bossbar type (SOLID, SEGMENTED_6, SEGMENTED_10, SEGMENTED_12, SEGMENTED_20)
+  bar-style: SEGMENTED_12
+
+# Sound settings for commands/actions
+sound-settings:
+  # Enable sounds for commands
+  enable-sounds: true
+  # Sound when capturing an admin with permissions (SOUND:VOLUME:PITCH)
+  on-capture: ENTITY_ITEM_BREAK;1.0;1.0
+  # Sound when incorrect password is entered
+  on-pas-fail: ENTITY_VILLAGER_NO;1.0;1.0
+  # Sound when correct password is entered
+  on-pas-correct: ENTITY_PLAYER_LEVELUP;1.0;1.0
+
+# Effects settings applied before entering the password
+effect-settings:
+  # Enable the effect that will be applied to the admin before entering the password
+  enable-effects: true
+  # Effects to apply to the player (EFFECT;LEVEL)
+  effects:
+    - 'BLINDNESS;3'
+
+# Logging settings
+logging-settings:
+  # Log successful/unsuccessful password entry attempts to file
+  logging-pas: true
+  # Log player joins with admin rights to file
+  logging-join: true
+  # Log plugin enabling and disabling to file
+  logging-enable-disable: true
+
+# Commands applied to offenders
+commands:
+
+  # Commands applied to those with admin rights but not in the config
+  not-in-config:
+    - 'kick %player% You are not in the list of administrators!'
+    - 'deop %player%'
+
+  # Commands applied to those with admin rights but not listed in op-whitelist
+  not-in-opwhitelist:
+    - 'deop %player%'
+  #- 'ban %player% You are not allowed to have operator rights!'
+
+  # Commands applied to those with forbidden permissions (disabled by default)
+  have-blacklisted-perm:
+    - 'lp user %player% permission clear'
+  #- 'ban %player% You are not allowed to have such permissions!'
+
+  # Commands applied to those who entered with admin rights but have a non-admin IP (disabled by default)
+  not-admin-ip:
+    - 'kick %player% Your IP is not on the whitelist'
+  #- 'deop %player%'
+
+  # Commands applied to those who entered the wrong password within the allotted attempts
+  failed-pass:
+    - 'ban %player% You entered the admin password incorrectly, your account is frozen'
+    - 'deop %player%'
+
+  # Commands applied to those who failed to enter the password within the allotted time
+  failed-time:
+    - 'kick %player% You did not manage to enter the admin password within the given time'
+    - 'deop %player%'
+
+  # Commands that will be applied to those who have rejoined the server without entering the correct password too many times
+  failed-rejoin:
+    - 'ban %player% You have been rejoining the server too many times without entering the password'
+    - 'deop %player%'
+
+# Permissions for which the player will need to enter the admin password (feel free to add your own!)
+permissions:
+  - '*'
+  - 'bukkit.*'
+  - 'minecraft.*'
+  - 'essentials.*'
+  - 'cmi.*'
+  - 'worldguard.*'
+  - 'worldedit.*'
+  - 'fawe.*'
+  - 'permissions.*'
+  - 'luckperms.*'
+  - 'luckperms.editor'
+  - 'luckperms.applyedits'
+  - 'citizens.*'
+  - 'citizenscmd.*'
+  - 'znpcs.*'
+  - 'holograms.*'
+  - 'multiverse.*'
+  - 'coreprotect.*'
+  - 'mycommand.*'
+  - 'towny.*'
+  - 'matrix.*'
+  - 'vulcan.*'
+  - 'grim.*'
+  - 'dh.admin'
+  - 'ls.admin'
+  - 'fawe.admin'
+  - 'authme.admin'
+  - 'nlogin.admin'
+  - 'protocol.admin'
+  - 'placeholderapi.admin'
+  - 'playerpoints.*'
+  - 'plugman.*'
+  - 'plugman.admin'
+  - 'plugman.download'
+  - 'serverprotector.admin'
+
+# Permissions that no one except players from the excluded-players section can have (disabled by default.)
+blacklisted-perms:
+  - '*'
+
+# Commands that can be entered before entering the admin password (specify with /)
+allowed-commands:
+  - '/l'
+  - '/login'
+  - '/reg'
+  - '/register'
+  - '/captcha'
+
+# Which players are allowed to have OP rights
+op-whitelist:
+  - Overwrite
+  - test99999
+
+# From which IPs and which players are allowed to enter with admin rights
+# You can specify only part of the IP address to allow entry to people with dynamic IPs. For example, 1.2.3.4 -> 1.2.3.*
+ip-whitelist:
+  # Player 1
+  test99999:
+    - 127.0.0.1
+    - 0.0.0.0
+  # Player 2
+  test123123:
+    - 228.13.37.*
+
+# Which players will be excluded from checks (each check has its own type)
+excluded-players:
+  # Players who do not need to enter the admin password
+  admin-pass:
+    - test99999
+    - test123123
+  # Players who will not be checked for inclusion in op-whitelist
+  op-whitelist:
+    - test99999
+    - test123123
+  # Players who will not be checked for inclusion in ip-whitelist
+  ip-whitelist:
+    - test99999
+    - test123123
+  # Players who will be allowed to have blocked permissions
+  blacklisted-perms:
+    - test99999
+    - test123123
