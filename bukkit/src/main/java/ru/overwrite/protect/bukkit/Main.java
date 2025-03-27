@@ -49,30 +49,6 @@ import java.util.stream.Collectors;
 
 public class Main extends JavaPlugin {
 
-    @Override
-    public void onEnable() {
-        long startTime = System.currentTimeMillis();
-        saveDefaultConfig();
-        final FileConfiguration config = getConfig();
-        final ConfigurationSection mainSettings = config.getConfigurationSection("main-settings");
-        setupLogger(config);
-        setupProxy(config);
-        loadConfigs(config);
-        PluginManager pluginManager = server.getPluginManager();
-        checkSafe(pluginManager);
-        checkPaper();
-        registerListeners(pluginManager);
-        registerCommands(pluginManager, mainSettings);
-        startTasks(config);
-        logEnableDisable(pluginConfig.logMessages.enabled(), LocalDateTime.now());
-        if (mainSettings.getBoolean("enable-metrics", true)) {
-            new Metrics(this, 13347);
-        }
-        checkForUpdates(mainSettings);
-        long endTime = System.currentTimeMillis();
-        pluginLogger.info("Plugin started in " + (endTime - startTime) + " ms");
-    }
-
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("'['dd-MM-yyyy']' HH:mm:ss -");
 
     public final Logger pluginLogger = Utils.FOLIA ?
@@ -97,7 +73,31 @@ public class Main extends JavaPlugin {
 
     private File logFile;
 
-    public final Server server = getServer();
+    private final Server server = getServer();
+
+    @Override
+    public void onEnable() {
+        long startTime = System.currentTimeMillis();
+        saveDefaultConfig();
+        final FileConfiguration config = getConfig();
+        final ConfigurationSection mainSettings = config.getConfigurationSection("main-settings");
+        setupLogger(config);
+        setupProxy(config);
+        loadConfigs(config);
+        PluginManager pluginManager = server.getPluginManager();
+        checkSafe(pluginManager);
+        checkPaper();
+        registerListeners(pluginManager);
+        registerCommands(pluginManager, mainSettings);
+        startTasks(config);
+        logEnableDisable(pluginConfig.logMessages.enabled(), LocalDateTime.now());
+        if (mainSettings.getBoolean("enable-metrics", true)) {
+            new Metrics(this, 13347);
+        }
+        checkForUpdates(mainSettings);
+        long endTime = System.currentTimeMillis();
+        pluginLogger.info("Plugin started in " + (endTime - startTime) + " ms");
+    }
 
     public void checkPaper() {
         if (server.getName().equals("CraftBukkit")) {
