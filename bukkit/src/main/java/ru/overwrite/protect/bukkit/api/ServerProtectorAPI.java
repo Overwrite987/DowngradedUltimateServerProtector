@@ -3,16 +3,19 @@ package ru.overwrite.protect.bukkit.api;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
-import ru.overwrite.protect.bukkit.ServerProtectorManager;
+import ru.overwrite.protect.bukkit.ServerProtector;
 import ru.overwrite.protect.bukkit.configuration.Config;
 import ru.overwrite.protect.bukkit.utils.Utils;
 import ru.overwrite.protect.bukkit.utils.logging.Logger;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public final class ServerProtectorAPI {
 
-    private final ServerProtectorManager plugin;
+    private final ServerProtector plugin;
 
     private final Config pluginConfig;
     private final Logger pluginLogger;
@@ -21,7 +24,7 @@ public final class ServerProtectorAPI {
     private final Map<String, String> sessions = new HashMap<>();
     private final Set<String> saved = new HashSet<>();
 
-    public ServerProtectorAPI(@NotNull ServerProtectorManager plugin) {
+    public ServerProtectorAPI(@NotNull ServerProtector plugin) {
         this.plugin = plugin;
         this.pluginConfig = plugin.pluginConfig;
         this.pluginLogger = plugin.pluginLogger;

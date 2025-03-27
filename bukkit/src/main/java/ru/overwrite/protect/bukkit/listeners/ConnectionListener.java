@@ -6,7 +6,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
 import org.bukkit.potion.PotionEffect;
-import ru.overwrite.protect.bukkit.ServerProtectorManager;
+import ru.overwrite.protect.bukkit.ServerProtector;
 import ru.overwrite.protect.bukkit.api.CaptureReason;
 import ru.overwrite.protect.bukkit.api.ServerProtectorAPI;
 import ru.overwrite.protect.bukkit.api.events.ServerProtectorCaptureEvent;
@@ -20,13 +20,13 @@ import java.util.Map;
 
 public class ConnectionListener implements Listener {
 
-    private final ServerProtectorManager plugin;
+    private final ServerProtector plugin;
     private final ServerProtectorAPI api;
     private final Config pluginConfig;
 
     private final Runner runner;
 
-    public ConnectionListener(ServerProtectorManager plugin) {
+    public ConnectionListener(ServerProtector plugin) {
         this.plugin = plugin;
         this.api = plugin.api;
         this.pluginConfig = plugin.pluginConfig;

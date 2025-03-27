@@ -4,14 +4,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import ru.overwrite.protect.bukkit.ServerProtectorManager;
+import ru.overwrite.protect.bukkit.ServerProtector;
 import ru.overwrite.protect.bukkit.configuration.data.EncryptionSettings;
 import ru.overwrite.protect.bukkit.configuration.data.UspMessages;
 import ru.overwrite.protect.bukkit.utils.Utils;
 
 public class SetpassSubcommand extends AbstractSubCommand {
 
-    public SetpassSubcommand(ServerProtectorManager plugin) {
+    public SetpassSubcommand(ServerProtector plugin) {
         super(plugin, "setpass", "serverprotector.setpass", true);
     }
 

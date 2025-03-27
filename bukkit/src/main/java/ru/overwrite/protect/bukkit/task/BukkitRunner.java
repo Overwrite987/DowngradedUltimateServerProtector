@@ -3,15 +3,16 @@ package ru.overwrite.protect.bukkit.task;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.jetbrains.annotations.NotNull;
-import ru.overwrite.protect.bukkit.ServerProtectorManager;
+import ru.overwrite.protect.bukkit.ServerProtector;
+
 
 @SuppressWarnings("deprecation")
 public final class BukkitRunner implements Runner {
 
-    private final ServerProtectorManager plugin;
+    private final ServerProtector plugin;
     private final BukkitScheduler scheduler;
 
-    public BukkitRunner(ServerProtectorManager plugin) {
+    public BukkitRunner(ServerProtector plugin) {
         this.plugin = plugin;
         this.scheduler = plugin.getServer().getScheduler();
     }

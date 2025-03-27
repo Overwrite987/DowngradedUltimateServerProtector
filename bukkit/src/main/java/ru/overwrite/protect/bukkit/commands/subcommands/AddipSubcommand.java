@@ -1,14 +1,14 @@
 package ru.overwrite.protect.bukkit.commands.subcommands;
 
 import org.bukkit.command.CommandSender;
-import ru.overwrite.protect.bukkit.ServerProtectorManager;
+import ru.overwrite.protect.bukkit.ServerProtector;
 import ru.overwrite.protect.bukkit.configuration.data.UspMessages;
 
 import java.util.List;
 
 public class AddipSubcommand extends AbstractSubCommand {
 
-    public AddipSubcommand(ServerProtectorManager plugin) {
+    public AddipSubcommand(ServerProtector plugin) {
         super(plugin, "addip", "serverprotector.addip", true);
     }
 

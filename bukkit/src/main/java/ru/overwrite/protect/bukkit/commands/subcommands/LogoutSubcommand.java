@@ -2,14 +2,14 @@ package ru.overwrite.protect.bukkit.commands.subcommands;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import ru.overwrite.protect.bukkit.ServerProtectorManager;
+import ru.overwrite.protect.bukkit.ServerProtector;
 import ru.overwrite.protect.bukkit.api.events.ServerProtectorLogoutEvent;
 import ru.overwrite.protect.bukkit.configuration.data.UspMessages;
 import ru.overwrite.protect.bukkit.utils.Utils;
 
 public class LogoutSubcommand extends AbstractSubCommand {
 
-    public LogoutSubcommand(ServerProtectorManager plugin) {
+    public LogoutSubcommand(ServerProtector plugin) {
         super(plugin, "logout", "serverprotector.protect", false);
     }
 

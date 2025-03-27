@@ -18,15 +18,15 @@ import java.util.Map;
 
 public final class PasswordHandler {
 
-    private final ServerProtectorManager plugin;
+    private final ServerProtector plugin;
     private final ServerProtectorAPI api;
     private final Config pluginConfig;
 
-    private final Map<String, Integer> attempts = new HashMap<>();
+    public final Map<String, Integer> attempts = new HashMap<>();
 
     public final Map<String, BossBar> bossbars = new HashMap<>();
 
-    public PasswordHandler(ServerProtectorManager plugin) {
+    public PasswordHandler(ServerProtector plugin) {
         this.plugin = plugin;
         this.pluginConfig = plugin.pluginConfig;
         this.api = plugin.api;

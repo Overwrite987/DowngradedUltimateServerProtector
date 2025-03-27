@@ -7,13 +7,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.jetbrains.annotations.NotNull;
-import ru.overwrite.protect.bukkit.ServerProtectorManager;
+import ru.overwrite.protect.bukkit.ServerProtector;
 
 public final class PluginMessage implements PluginMessageListener {
 
-    private final ServerProtectorManager plugin;
+    private final ServerProtector plugin;
 
-    public PluginMessage(ServerProtectorManager plugin) {
+    public PluginMessage(ServerProtector plugin) {
         this.plugin = plugin;
     }
 

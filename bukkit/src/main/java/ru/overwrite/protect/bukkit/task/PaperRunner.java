@@ -5,18 +5,18 @@ import io.papermc.paper.threadedregions.scheduler.GlobalRegionScheduler;
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import ru.overwrite.protect.bukkit.ServerProtectorManager;
+import ru.overwrite.protect.bukkit.ServerProtector;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 public final class PaperRunner implements Runner {
 
-    private final ServerProtectorManager plugin;
+    private final ServerProtector plugin;
     private final AsyncScheduler asyncScheduler;
     private final GlobalRegionScheduler globalScheduler;
 
-    public PaperRunner(ServerProtectorManager plugin) {
+    public PaperRunner(ServerProtector plugin) {
         this.plugin = plugin;
         this.asyncScheduler = plugin.getServer().getAsyncScheduler();
         this.globalScheduler = plugin.getServer().getGlobalRegionScheduler();

@@ -1,15 +1,16 @@
 package ru.overwrite.protect.bukkit.utils.logging;
 
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import ru.overwrite.protect.bukkit.ServerProtectorManager;
+import ru.overwrite.protect.bukkit.ServerProtector;
+
 
 public class PaperLogger implements Logger {
 
-    private final ServerProtectorManager plugin;
+    private final ServerProtector plugin;
 
     private final LegacyComponentSerializer legacySection = LegacyComponentSerializer.legacySection();
 
-    public PaperLogger(ServerProtectorManager plugin) {
+    public PaperLogger(ServerProtector plugin) {
         this.plugin = plugin;
     }
 

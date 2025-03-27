@@ -1,29 +1,35 @@
 package ru.overwrite.protect.bukkit.commands;
 
-import org.bukkit.command.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
-import ru.overwrite.protect.bukkit.ServerProtectorManager;
+import ru.overwrite.protect.bukkit.ServerProtector;
 import ru.overwrite.protect.bukkit.commands.subcommands.*;
 import ru.overwrite.protect.bukkit.configuration.Config;
 import ru.overwrite.protect.bukkit.configuration.data.UspMessages;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class UspCommand implements TabExecutor {
 
-    private final ServerProtectorManager plugin;
+    private final ServerProtector plugin;
     private final Config pluginConfig;
 
     private final Map<String, AbstractSubCommand> subCommands = new HashMap<>();
 
-    public UspCommand(ServerProtectorManager plugin) {
+    public UspCommand(ServerProtector plugin) {
         this.plugin = plugin;
         this.pluginConfig = plugin.pluginConfig;
         registerSubCommands(plugin);
     }
 
-    private void registerSubCommands(ServerProtectorManager plugin) {
+    private void registerSubCommands(ServerProtector plugin) {
         registerSubCommand(new LogoutSubcommand(plugin));
         registerSubCommand(new ReloadSubcommand(plugin));
         registerSubCommand(new RebootSubcommand(plugin));

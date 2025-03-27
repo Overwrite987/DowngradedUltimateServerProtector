@@ -1,11 +1,11 @@
 package ru.overwrite.protect.bukkit.commands.subcommands;
 
 import org.bukkit.command.CommandSender;
-import ru.overwrite.protect.bukkit.ServerProtectorManager;
+import ru.overwrite.protect.bukkit.ServerProtector;
 
 public class ReloadSubcommand extends AbstractSubCommand {
 
-    public ReloadSubcommand(ServerProtectorManager plugin) {
+    public ReloadSubcommand(ServerProtector plugin) {
         super(plugin, "reload", "serverprotector.reload", false);
     }
 

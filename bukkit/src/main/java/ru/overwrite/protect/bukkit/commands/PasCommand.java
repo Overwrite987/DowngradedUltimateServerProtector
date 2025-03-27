@@ -6,18 +6,18 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import ru.overwrite.protect.bukkit.PasswordHandler;
-import ru.overwrite.protect.bukkit.ServerProtectorManager;
+import ru.overwrite.protect.bukkit.ServerProtector;
 import ru.overwrite.protect.bukkit.api.ServerProtectorAPI;
 import ru.overwrite.protect.bukkit.configuration.Config;
 
 public final class PasCommand implements CommandExecutor {
 
-    private final ServerProtectorManager plugin;
+    private final ServerProtector plugin;
     private final ServerProtectorAPI api;
     private final PasswordHandler passwordHandler;
     private final Config pluginConfig;
 
-    public PasCommand(ServerProtectorManager plugin) {
+    public PasCommand(ServerProtector plugin) {
         this.plugin = plugin;
         this.pluginConfig = plugin.pluginConfig;
         this.passwordHandler = plugin.passwordHandler;

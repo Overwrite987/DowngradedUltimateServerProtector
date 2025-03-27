@@ -1,16 +1,14 @@
 package ru.overwrite.protect.bukkit.commands.subcommands;
 
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import ru.overwrite.protect.bukkit.ServerProtectorManager;
+import ru.overwrite.protect.bukkit.ServerProtector;
 import ru.overwrite.protect.bukkit.configuration.data.UspMessages;
 
 import java.util.List;
 
 public class RemopSubcommand extends AbstractSubCommand {
 
-    public RemopSubcommand(ServerProtectorManager plugin) {
+    public RemopSubcommand(ServerProtector plugin) {
         super(plugin, "remop", "serverprotector.remop", true);
     }
 
