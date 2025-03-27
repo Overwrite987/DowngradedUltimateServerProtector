@@ -38,11 +38,6 @@ public class PaperRunner implements Runner {
     }
 
     @Override
-    public void runDelayed(@NotNull Runnable task, long delayTicks) {
-        globalScheduler.runDelayed(plugin, toConsumer(task), delayTicks);
-    }
-
-    @Override
     public void runDelayedAsync(@NotNull Runnable task, long delayTicks) {
         asyncScheduler.runDelayed(plugin, toConsumer(task), toMilli(delayTicks), TimeUnit.MILLISECONDS);
     }

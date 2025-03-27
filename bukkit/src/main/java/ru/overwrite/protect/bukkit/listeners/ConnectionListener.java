@@ -101,8 +101,7 @@ public class ConnectionListener implements Listener {
         }
 
         outer:
-        for (int i = 0; i < allowedIps.size(); i++) {
-            final String allowedIp = allowedIps.get(i);
+        for (final String allowedIp : allowedIps) {
             int playerIpLength = playerIp.length();
             int allowedIpLength = allowedIp.length();
 

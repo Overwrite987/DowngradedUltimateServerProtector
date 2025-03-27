@@ -58,8 +58,7 @@ public class ChatListener implements Listener {
             }
         }
         List<String> allowedCommands = pluginConfig.accessData.allowedCommands();
-        for (int i = 0; i < allowedCommands.size(); i++) {
-            final String command = allowedCommands.get(i);
+        for (final String command : allowedCommands) {
             if (label.equalsIgnoreCase(command) || message.equalsIgnoreCase(command)) {
                 return;
             }

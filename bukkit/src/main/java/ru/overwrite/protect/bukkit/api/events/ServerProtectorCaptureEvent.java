@@ -24,11 +24,6 @@ public class ServerProtectorCaptureEvent extends ServerProtectorPlayerEvent impl
     }
 
     @NotNull
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
-
-    @NotNull
     @Override
     public HandlerList getHandlers() {
         return HANDLERS;
@@ -42,16 +37,6 @@ public class ServerProtectorCaptureEvent extends ServerProtectorPlayerEvent impl
     @Override
     public void setCancelled(boolean cancel) {
         this.isCancelled = cancel;
-    }
-
-    @NotNull
-    public String getIp() {
-        return this.ip;
-    }
-
-    @NotNull
-    public CaptureReason getCaptureReason() {
-        return this.captureReason;
     }
 
 }

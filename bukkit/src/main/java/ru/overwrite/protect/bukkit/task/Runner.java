@@ -11,8 +11,6 @@ public interface Runner {
 
     void runAsync(@NotNull Runnable task);
 
-    void runDelayed(@NotNull Runnable task, long delayTicks);
-
     void runDelayedAsync(@NotNull Runnable task, long delayTicks);
 
     void runPeriodical(@NotNull Runnable task, long delayTicks, long periodTicks);

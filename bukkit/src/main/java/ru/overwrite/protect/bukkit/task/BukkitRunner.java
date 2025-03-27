@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 import ru.overwrite.protect.bukkit.Main;
 
 
-@SuppressWarnings("deprecation")
 public class BukkitRunner implements Runner {
 
     private final Main plugin;
@@ -30,11 +29,6 @@ public class BukkitRunner implements Runner {
     @Override
     public void runAsync(@NotNull Runnable task) {
         scheduler.runTaskAsynchronously(plugin, task);
-    }
-
-    @Override
-    public void runDelayed(@NotNull Runnable task, long delayTicks) {
-        scheduler.runTaskLater(plugin, task, delayTicks);
     }
 
     @Override

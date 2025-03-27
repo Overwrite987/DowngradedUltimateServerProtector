@@ -17,19 +17,9 @@ public class ServerProtectorLogoutEvent extends ServerProtectorPlayerEvent {
     }
 
     @NotNull
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
-
-    @NotNull
     @Override
     public HandlerList getHandlers() {
         return HANDLERS;
-    }
-
-    @NotNull
-    public String getIp() {
-        return this.ip;
     }
 
 }

@@ -20,11 +20,6 @@ public class ServerProtectorPasswordFailEvent extends ServerProtectorPlayerEvent
     }
 
     @NotNull
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
-
-    @NotNull
     @Override
     public HandlerList getHandlers() {
         return HANDLERS;
@@ -38,10 +33,6 @@ public class ServerProtectorPasswordFailEvent extends ServerProtectorPlayerEvent
     @Override
     public void setCancelled(boolean cancel) {
         this.isCancelled = cancel;
-    }
-
-    public int getAttempts() {
-        return this.attempts;
     }
 
 }

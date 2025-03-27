@@ -18,13 +18,4 @@ public abstract class ServerProtectorPlayerEvent extends Event {
         this.player = who;
     }
 
-    /**
-     * Returns the player involved in this event
-     *
-     * @return Player who is involved in this event
-     */
-    @NotNull
-    public final Player getPlayer() {
-        return this.player;
-    }
 }

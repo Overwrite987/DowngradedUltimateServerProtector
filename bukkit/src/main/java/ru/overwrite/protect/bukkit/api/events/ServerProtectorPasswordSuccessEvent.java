@@ -17,11 +17,6 @@ public class ServerProtectorPasswordSuccessEvent extends ServerProtectorPlayerEv
     }
 
     @NotNull
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
-
-    @NotNull
     @Override
     public HandlerList getHandlers() {
         return HANDLERS;
