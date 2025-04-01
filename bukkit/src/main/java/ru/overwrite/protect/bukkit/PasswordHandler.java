@@ -34,21 +34,21 @@ public class PasswordHandler {
 
     public void checkPassword(Player player, String input, boolean resync) {
         Runnable run = () -> {
-            ServerProtectorPasswordEnterEvent enterEvent = new ServerProtectorPasswordEnterEvent(player, input);
+            var enterEvent = new ServerProtectorPasswordEnterEvent(player, input);
             if (pluginConfig.apiSettings.callEventOnPasswordEnter()) {
                 enterEvent.callEvent();
             }
             if (enterEvent.isCancelled()) {
                 return;
             }
-            String playerPass = pluginConfig.perPlayerPasswords.get(player.getName());
+            var playerPass = pluginConfig.perPlayerPasswords.get(player.getName());
             if (playerPass == null) {
                 this.failedPassword(player);
                 return;
             }
-            EncryptionSettings encryptionSettings = pluginConfig.encryptionSettings;
-            String salt = playerPass.split(":")[0];
-            String pass = encryptionSettings.enableEncryption()
+            var encryptionSettings = pluginConfig.encryptionSettings;
+            var salt = playerPass.split(":")[0];
+            var pass = encryptionSettings.enableEncryption()
                     ? Utils.encryptPassword(input, salt, encryptionSettings.encryptMethods())
                     : input;
             if (pass.equals(playerPass)) {
@@ -56,8 +56,8 @@ public class PasswordHandler {
                 return;
             }
             if (encryptionSettings.enableEncryption() && !encryptionSettings.oldEncryptMethods().isEmpty()) {
-                for (List<String> oldEncryptMethod : encryptionSettings.oldEncryptMethods()) {
-                    String oldgenPass = Utils.encryptPassword(input, salt, oldEncryptMethod);
+                for (var oldEncryptMethod : encryptionSettings.oldEncryptMethods()) {
+                    var oldgenPass = Utils.encryptPassword(input, salt, oldEncryptMethod);
                     if (oldgenPass.equals(playerPass)) {
                         this.correctPassword(player);
                         return;
@@ -77,7 +77,7 @@ public class PasswordHandler {
     }
 
     private boolean isAttemptsMax(String playerName) {
-        int playerAttempts = attempts.getOrDefault(playerName, 0);
+        var playerAttempts = attempts.getOrDefault(playerName, 0);
         return playerAttempts >= pluginConfig.punishSettings.maxAttempts();
     }
 
@@ -85,11 +85,11 @@ public class PasswordHandler {
         if (!plugin.isCalledFromAllowedApplication()) {
             return;
         }
-        String playerName = player.getName();
+        var playerName = player.getName();
         if (pluginConfig.punishSettings.enableAttempts()) {
             attempts.put(playerName, attempts.getOrDefault(playerName, 0) + 1);
         }
-        ServerProtectorPasswordFailEvent failEvent = new ServerProtectorPasswordFailEvent(player, attempts.get(playerName));
+        var failEvent = new ServerProtectorPasswordFailEvent(player, attempts.get(playerName));
         failEvent.callEvent();
         if (failEvent.isCancelled()) {
             return;
@@ -111,12 +111,12 @@ public class PasswordHandler {
         if (!plugin.isCalledFromAllowedApplication()) {
             return;
         }
-        ServerProtectorPasswordSuccessEvent successEvent = new ServerProtectorPasswordSuccessEvent(player);
+        var successEvent = new ServerProtectorPasswordSuccessEvent(player);
         successEvent.callEvent();
         if (successEvent.isCancelled()) {
             return;
         }
-        String playerName = player.getName();
+        var playerName = player.getName();
         api.uncapturePlayer(playerName);
         player.sendMessage(pluginConfig.messages.correct());
         if (pluginConfig.messageSettings.sendTitle()) {
@@ -150,14 +150,14 @@ public class PasswordHandler {
 
     private void showPlayer(Player player) {
         if (pluginConfig.blockingSettings.hideOnEntering()) {
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            for (var onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (!onlinePlayer.equals(player)) {
                     onlinePlayer.showPlayer(plugin, player);
                 }
             }
         }
         if (pluginConfig.blockingSettings.hideOtherOnEntering()) {
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            for (var onlinePlayer : Bukkit.getOnlinePlayers()) {
                 player.showPlayer(plugin, onlinePlayer);
             }
         }

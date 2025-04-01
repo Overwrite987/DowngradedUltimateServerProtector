@@ -13,7 +13,7 @@ public class RempassSubcommand extends AbstractSubCommand {
 
     @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
-        UspMessages uspMessages = pluginConfig.uspMessages;
+        var uspMessages = pluginConfig.uspMessages;
         if (args.length > 1) {
             if (!plugin.isAdmin(args[1]) && !plugin.isAdmin(pluginConfig.geyserSettings.prefix() + args[1])) {
                 sender.sendMessage(uspMessages.notInConfig());
@@ -30,7 +30,7 @@ public class RempassSubcommand extends AbstractSubCommand {
     }
 
     private void removeAdmin(String nick) {
-        FileConfiguration dataFile = pluginConfig.getFile(plugin.dataFilePath, plugin.dataFileName);
+        var dataFile = pluginConfig.getFile(plugin.dataFilePath, plugin.dataFileName);
         if (!pluginConfig.encryptionSettings.enableEncryption()) {
             dataFile.set("data." + nick + ".pass", null);
             dataFile.set("data." + nick, null);

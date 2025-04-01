@@ -27,19 +27,19 @@ public class UpdateSubcommand extends AbstractSubCommand {
 
     public void checkAndUpdatePlugin(CommandSender sender, Main plugin) {
         plugin.runner.runAsync(() -> Utils.checkUpdates(plugin, version -> {
-            SystemMessages systemMessages = pluginConfig.systemMessages;
+            var systemMessages = pluginConfig.systemMessages;
             sender.sendMessage(systemMessages.baselineDefault());
 
-            String currentVersion = plugin.getDescription().getVersion();
+            var currentVersion = plugin.getDescription().getVersion();
 
             if (currentVersion.equals(version)) {
                 sender.sendMessage(systemMessages.updateLatest());
             } else {
-                String currentJarName = new File(plugin.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getName();
-                String downloadUrl = "https://github.com/Overwrite987/UltimateServerProtector/releases/download/" + version + "/" + "UltimateServerProtector.jar";
+                var currentJarName = new File(plugin.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getName();
+                var downloadUrl = "https://github.com/Overwrite987/UltimateServerProtector/releases/download/" + version + "/" + "UltimateServerProtector.jar";
                 try {
-                    File updateFolder = Bukkit.getUpdateFolderFile();
-                    File targetFile = new File(updateFolder, currentJarName);
+                    var updateFolder = Bukkit.getUpdateFolderFile();
+                    var targetFile = new File(updateFolder, currentJarName);
 
                     downloadFile(downloadUrl, targetFile, sender);
 
@@ -54,27 +54,27 @@ public class UpdateSubcommand extends AbstractSubCommand {
     }
 
     public void downloadFile(String fileURL, File targetFile, CommandSender sender) throws IOException {
-        URL url = new URL(fileURL);
-        URLConnection connection = url.openConnection();
-        int fileSize = connection.getContentLength();
+        var url = new URL(fileURL);
+        var connection = url.openConnection();
+        var fileSize = connection.getContentLength();
 
-        try (BufferedInputStream in = new BufferedInputStream(connection.getInputStream());
-             FileOutputStream out = new FileOutputStream(targetFile)) {
+        try (var in = new BufferedInputStream(connection.getInputStream());
+             var out = new FileOutputStream(targetFile)) {
 
-            byte[] data = new byte[1024];
+            var data = new byte[1024];
             int bytesRead;
-            int totalBytesRead = 0;
-            int lastPercentage = 0;
+            var totalBytesRead = 0;
+            var lastPercentage = 0;
 
             while ((bytesRead = in.read(data, 0, 1024)) != -1) {
                 out.write(data, 0, bytesRead);
                 totalBytesRead += bytesRead;
-                int progressPercentage = (int) ((double) totalBytesRead / fileSize * 100);
+                var progressPercentage = (int) ((double) totalBytesRead / fileSize * 100);
 
                 if (progressPercentage >= lastPercentage + 10) {
                     lastPercentage = progressPercentage;
-                    int downloadedKB = totalBytesRead / 1024;
-                    int fullSizeKB = fileSize / 1024;
+                    var downloadedKB = totalBytesRead / 1024;
+                    var fullSizeKB = fileSize / 1024;
                     sender.sendMessage(downloadedKB + "/" + fullSizeKB + "KB) (" + progressPercentage + "%)");
                 }
             }

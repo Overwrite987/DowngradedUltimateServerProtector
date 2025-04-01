@@ -29,12 +29,12 @@ public class ChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onChat(AsyncPlayerChatEvent e) {
-        Player player = e.getPlayer();
+        var player = e.getPlayer();
         if (!api.isCaptured(player)) {
             return;
         }
         if (!pluginConfig.mainSettings.useCommand()) {
-            String message = e.getMessage();
+            var message = e.getMessage();
             passwordHandler.checkPassword(player, message, true);
         }
         e.setMessage("");
@@ -43,12 +43,12 @@ public class ChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onCommand(PlayerCommandPreprocessEvent e) {
-        Player player = e.getPlayer();
+        var player = e.getPlayer();
         if (!api.isCaptured(player)) {
             return;
         }
-        String message = e.getMessage();
-        String label = cutCommand(message);
+        var message = e.getMessage();
+        var label = cutCommand(message);
         if (pluginConfig.mainSettings.useCommand()) {
             if (label.equalsIgnoreCase("/" + pluginConfig.mainSettings.pasCommand())) {
                 if (!plugin.paper) {
@@ -57,8 +57,8 @@ public class ChatListener implements Listener {
                 return;
             }
         }
-        List<String> allowedCommands = pluginConfig.accessData.allowedCommands();
-        for (final String command : allowedCommands) {
+        var allowedCommands = pluginConfig.accessData.allowedCommands();
+        for (var command : allowedCommands) {
             if (label.equalsIgnoreCase(command) || message.equalsIgnoreCase(command)) {
                 return;
             }
@@ -67,7 +67,7 @@ public class ChatListener implements Listener {
     }
 
     private String cutCommand(String str) {
-        int index = str.indexOf(' ');
+        var index = str.indexOf(' ');
         return index == -1 ? str : str.substring(0, index);
     }
 }

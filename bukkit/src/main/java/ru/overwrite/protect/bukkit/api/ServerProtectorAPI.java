@@ -84,7 +84,7 @@ public class ServerProtectorAPI {
         if (sessions.isEmpty()) {
             return false;
         }
-        String sessionIp = sessions.get(player.getName());
+        var sessionIp = sessions.get(player.getName());
         return sessionIp != null && sessionIp.equals(Utils.getIp(player));
     }
 
@@ -92,7 +92,7 @@ public class ServerProtectorAPI {
         if (sessions.isEmpty()) {
             return false;
         }
-        String sessionIp = sessions.get(playerName);
+        var sessionIp = sessions.get(playerName);
         return sessionIp != null && sessionIp.equals(ip);
     }
 

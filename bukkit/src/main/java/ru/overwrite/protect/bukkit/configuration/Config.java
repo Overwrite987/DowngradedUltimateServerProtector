@@ -31,10 +31,10 @@ public class Config {
 
     public void setupPasswords(FileConfiguration dataFile) {
         perPlayerPasswords = new ConcurrentHashMap<>();
-        ConfigurationSection data = dataFile.getConfigurationSection("data");
-        boolean shouldSave = false;
-        for (String nick : data.getKeys(false)) {
-            String playerNick = (this.geyserSettings.prefix() != null &&
+        var data = dataFile.getConfigurationSection("data");
+        var shouldSave = false;
+        for (var nick : data.getKeys(false)) {
+            var playerNick = (this.geyserSettings.prefix() != null &&
                     !this.geyserSettings.prefix().isBlank() &&
                     this.geyserSettings.nicknames().contains(nick))
                     ? this.geyserSettings.prefix() + nick
@@ -45,7 +45,7 @@ public class Config {
             }
             if (this.encryptionSettings.autoEncryptPasswords()) {
                 if (data.getString(nick + ".pass") != null) {
-                    String encryptedPas = Utils.encryptPassword(data.getString(nick + ".pass"), Utils.generateSalt(this.encryptionSettings.saltLength()), this.encryptionSettings.encryptMethods());
+                    var encryptedPas = Utils.encryptPassword(data.getString(nick + ".pass"), Utils.generateSalt(this.encryptionSettings.saltLength()), this.encryptionSettings.encryptMethods());
                     dataFile.set("data." + nick + ".encrypted-pass", encryptedPas);
                     dataFile.set("data." + nick + ".pass", null);
                     shouldSave = true;
@@ -62,10 +62,10 @@ public class Config {
     public MainSettings mainSettings;
 
     public void loadMainSettings(FileConfiguration config, FileConfiguration configFile) {
-        ConfigurationSection mainSettings = config.getConfigurationSection("main-settings");
+        var mainSettings = config.getConfigurationSection("main-settings");
         if (!configFile.contains("main-settings")) {
             pluginLogger.warn("Configuration section main-settings not found!");
-            ConfigurationSection section = configFile.createSection("main-settings");
+            var section = configFile.createSection("main-settings");
             section.set("serializer", "LEGACY");
             section.set("prefix", "[UltimateServerProtector]");
             section.set("pas-command", "pas");
@@ -90,10 +90,10 @@ public class Config {
     public EncryptionSettings encryptionSettings;
 
     public void loadEncryptionSettings(FileConfiguration config, FileConfiguration configFile) {
-        ConfigurationSection encryptionSettings = config.getConfigurationSection("encryption-settings");
+        var encryptionSettings = config.getConfigurationSection("encryption-settings");
         if (!configFile.contains("encryption-settings")) {
             pluginLogger.warn("Configuration section encryption-settings not found!");
-            ConfigurationSection section = configFile.createSection("encryption-settings");
+            var section = configFile.createSection("encryption-settings");
             section.set("enable-encryption", false);
             section.set("encrypt-method", "");
             section.set("old-encrypt-methods", List.of());
@@ -114,7 +114,7 @@ public class Config {
     }
 
     private List<String> getEncryptionMethods(ConfigurationSection section) {
-        String encryptionMethod = section.getString("encrypt-method", "").trim();
+        var encryptionMethod = section.getString("encrypt-method", "").trim();
         return encryptionMethod.isEmpty() ? List.of() : List.of(encryptionMethod.split(";"));
     }
 
@@ -135,10 +135,10 @@ public class Config {
     public GeyserSettings geyserSettings;
 
     public void loadGeyserSettings(FileConfiguration config, FileConfiguration configFile) {
-        ConfigurationSection geyserSettings = config.getConfigurationSection("geyser-settings");
+        var geyserSettings = config.getConfigurationSection("geyser-settings");
         if (!configFile.contains("geyser-settings")) {
             pluginLogger.warn("Configuration section geyser-settings not found!");
-            ConfigurationSection section = configFile.createSection("geyser-settings");
+            var section = configFile.createSection("geyser-settings");
             section.set("geyser-prefix", ".");
             section.set("geyser-nicknames", List.of("test99999"));
             save(plugin.dataFilePath, configFile, "config.yml");
@@ -154,10 +154,10 @@ public class Config {
     public BlockingSettings blockingSettings;
 
     public void loadAdditionalChecks(FileConfiguration config, FileConfiguration configFile) {
-        ConfigurationSection blockingSettings = config.getConfigurationSection("blocking-settings");
+        var blockingSettings = config.getConfigurationSection("blocking-settings");
         if (!configFile.contains("blocking-settings")) {
             pluginLogger.warn("Configuration section blocking-settings not found!");
-            ConfigurationSection section = configFile.createSection("blocking-settings");
+            var section = configFile.createSection("blocking-settings");
             section.set("block-item-drop", true);
             section.set("block-item-pickup", true);
             section.set("block-tab-complete", true);
@@ -187,10 +187,10 @@ public class Config {
     public SessionSettings sessionSettings;
 
     public void loadSessionSettings(FileConfiguration config, FileConfiguration configFile) {
-        ConfigurationSection sessionSettings = config.getConfigurationSection("session-settings");
+        var sessionSettings = config.getConfigurationSection("session-settings");
         if (!configFile.contains("session-settings")) {
             pluginLogger.warn("Configuration section session-settings not found!");
-            ConfigurationSection section = configFile.createSection("session-settings");
+            var section = configFile.createSection("session-settings");
             section.set("session", true);
             section.set("session-time-enabled", true);
             section.set("session-time", 21600);
@@ -208,10 +208,10 @@ public class Config {
     public PunishSettings punishSettings;
 
     public void loadPunishSettings(FileConfiguration config, FileConfiguration configFile) {
-        ConfigurationSection punishSettings = config.getConfigurationSection("punish-settings");
+        var punishSettings = config.getConfigurationSection("punish-settings");
         if (!configFile.contains("punish-settings")) {
             pluginLogger.warn("Configuration section punish-settings not found!");
-            ConfigurationSection section = configFile.createSection("punish-settings");
+            var section = configFile.createSection("punish-settings");
             section.set("enable-attempts", true);
             section.set("max-attempts", 3);
             section.set("enable-time", true);
@@ -235,10 +235,10 @@ public class Config {
     public SecureSettings secureSettings;
 
     public void loadSecureSettings(FileConfiguration config, FileConfiguration configFile) {
-        ConfigurationSection secureSettings = config.getConfigurationSection("secure-settings");
+        var secureSettings = config.getConfigurationSection("secure-settings");
         if (!configFile.contains("secure-settings")) {
             pluginLogger.warn("Configuration section secure-settings not found!");
-            ConfigurationSection section = configFile.createSection("secure-settings");
+            var section = configFile.createSection("secure-settings");
             section.set("enable-op-whitelist", false);
             section.set("enable-notadmin-punish", false);
             section.set("enable-permission-blacklist", false);
@@ -262,10 +262,10 @@ public class Config {
     public ApiSettings apiSettings;
 
     public void loadApiSettings(FileConfiguration config, FileConfiguration configFile) {
-        ConfigurationSection apiSettings = config.getConfigurationSection("api-settings");
+        var apiSettings = config.getConfigurationSection("api-settings");
         if (!configFile.contains("api-settings")) {
             pluginLogger.warn("Configuration section api-settings not found!");
-            ConfigurationSection section = configFile.createSection("api-settings");
+            var section = configFile.createSection("api-settings");
             section.set("allow-cancel-capture-event", false);
             section.set("call-event-on-password-enter", false);
             section.set("allowed-auth-api-calls-packages", List.of());
@@ -283,10 +283,10 @@ public class Config {
     public MessageSettings messageSettings;
 
     public void loadMessageSettings(FileConfiguration config, FileConfiguration configFile) {
-        ConfigurationSection messageSettings = config.getConfigurationSection("message-settings");
+        var messageSettings = config.getConfigurationSection("message-settings");
         if (!configFile.contains("message-settings")) {
             pluginLogger.warn("Configuration section message-settings not found!");
-            ConfigurationSection section = configFile.createSection("message-settings");
+            var section = configFile.createSection("message-settings");
             section.set("send-titles", true);
             section.set("enable-broadcasts", true);
             section.set("enable-console-broadcasts", true);
@@ -304,10 +304,10 @@ public class Config {
     public BossbarSettings bossbarSettings;
 
     public void loadBossbarSettings(FileConfiguration config, FileConfiguration configFile) {
-        ConfigurationSection bossbarSettings = config.getConfigurationSection("bossbar-settings");
+        var bossbarSettings = config.getConfigurationSection("bossbar-settings");
         if (!configFile.contains("bossbar-settings")) {
             pluginLogger.warn("Configuration section bossbar-settings not found!");
-            ConfigurationSection section = configFile.createSection("bossbar-settings");
+            var section = configFile.createSection("bossbar-settings");
             section.set("enable-bossbar", false);
             section.set("bar-color", "RED");
             section.set("bar-style", "SEGMENTED_12");
@@ -315,8 +315,8 @@ public class Config {
             pluginLogger.info("Created section bossbar-settings");
             bossbarSettings = configFile.getConfigurationSection("bossbar-settings");
         }
-        ConfigurationSection bossbar = plugin.messageFile.getConfigurationSection("bossbar");
-        String bossbarMessage = getMessage(bossbar, "message");
+        var bossbar = plugin.messageFile.getConfigurationSection("bossbar");
+        var bossbarMessage = getMessage(bossbar, "message");
 
         this.bossbarSettings = new BossbarSettings(
                 bossbarSettings.getBoolean("enable-bossbar", true),
@@ -329,10 +329,10 @@ public class Config {
     public SoundSettings soundSettings;
 
     public void loadSoundSettings(FileConfiguration config, FileConfiguration configFile) {
-        ConfigurationSection soundSettings = config.getConfigurationSection("sound-settings");
+        var soundSettings = config.getConfigurationSection("sound-settings");
         if (!configFile.contains("sound-settings")) {
             pluginLogger.warn("Configuration section sound-settings not found!");
-            ConfigurationSection section = configFile.createSection("sound-settings");
+            var section = configFile.createSection("sound-settings");
             section.set("enable-sounds", false);
             section.set("on-capture", "ENTITY_ITEM_BREAK;1.0;1.0");
             section.set("on-pas-fail", "ENTITY_VILLAGER_NO;1.0;1.0");
@@ -352,17 +352,17 @@ public class Config {
     public EffectSettings effectSettings;
 
     public void loadEffects(FileConfiguration config, FileConfiguration configFile) {
-        ConfigurationSection effectSettings = config.getConfigurationSection("effect-settings");
+        var effectSettings = config.getConfigurationSection("effect-settings");
         if (!configFile.contains("effect-settings")) {
             pluginLogger.warn("Configuration section effect-settings not found!");
-            ConfigurationSection section = configFile.createSection("effect-settings");
+            var section = configFile.createSection("effect-settings");
             section.set("enable-effects", true);
             section.set("effects", List.of("BLINDNESS;3"));
             save(plugin.dataFilePath, configFile, "config.yml");
             pluginLogger.info("Created section effect-settings");
             effectSettings = configFile.getConfigurationSection("effect-settings");
         }
-        List<PotionEffect> effectList = getEffectList(effectSettings.getStringList("effects"));
+        var effectList = getEffectList(effectSettings.getStringList("effects"));
         this.effectSettings = new EffectSettings(
                 effectSettings.getBoolean("enable-effects", true),
                 effectList
@@ -374,10 +374,10 @@ public class Config {
             return List.of();
         }
         List<PotionEffect> effectList = new ArrayList<>(effects.size());
-        for (String effect : effects) {
+        for (var effect : effects) {
             int separatorIndex = effect.indexOf(';');
-            String effectName = separatorIndex > 0 ? effect.substring(0, separatorIndex) : effect;
-            PotionEffectType type = PotionEffectType.getByName(effectName.toUpperCase());
+            var effectName = separatorIndex > 0 ? effect.substring(0, separatorIndex) : effect;
+            var type = PotionEffectType.getByName(effectName.toUpperCase());
             int level = separatorIndex > 0 ? Integer.parseInt(effect.substring(separatorIndex + 1)) - 1 : 0;
             effectList.add(new PotionEffect(type, Integer.MAX_VALUE, level));
         }
@@ -387,10 +387,10 @@ public class Config {
     public LoggingSettings loggingSettings;
 
     public void loadLoggingSettings(FileConfiguration config, FileConfiguration configFile) {
-        ConfigurationSection loggingSettings = config.getConfigurationSection("logging-settings");
+        var loggingSettings = config.getConfigurationSection("logging-settings");
         if (!configFile.contains("logging-settings")) {
             pluginLogger.warn("Configuration section logging-settings not found!");
-            ConfigurationSection section = configFile.createSection("logging-settings");
+            var section = configFile.createSection("logging-settings");
             section.set("logging-pas", true);
             section.set("logging-join", true);
             section.set("logging-enable-disable", true);
@@ -410,7 +410,7 @@ public class Config {
     public Commands commands;
 
     public void loadFailCommands(FileConfiguration config, FileConfiguration configFile) {
-        ConfigurationSection commands = config.getConfigurationSection("commands");
+        var commands = config.getConfigurationSection("commands");
         if (!configFile.contains("commands")) {
             pluginLogger.warn("Configuration section commands not found!");
             ConfigurationSection section = configFile.createSection("commands");
@@ -439,10 +439,10 @@ public class Config {
     public AccessData accessData;
 
     public void loadAccessData(FileConfiguration config) {
-        Set<String> perms = new HashSet<>(config.getStringList("permissions"));
-        List<String> allowedCommands = config.getStringList("allowed-commands");
+        var perms = new HashSet<>(config.getStringList("permissions"));
+        var allowedCommands = config.getStringList("allowed-commands");
 
-        ConfigurationSection secureSettings = config.getConfigurationSection("secure-settings");
+        var secureSettings = config.getConfigurationSection("secure-settings");
 
         List<String> opWhitelist = new ArrayList<>();
         Set<String> blacklistedPerms = new HashSet<>();
@@ -455,8 +455,8 @@ public class Config {
             blacklistedPerms.addAll(config.getStringList("blacklisted-perms"));
         }
         if (secureSettings.getBoolean("enable-ip-whitelist")) {
-            for (String ipwlPlayer : config.getConfigurationSection("ip-whitelist").getKeys(false)) {
-                List<String> ips = config.getStringList("ip-whitelist." + ipwlPlayer);
+            for (var ipwlPlayer : config.getConfigurationSection("ip-whitelist").getKeys(false)) {
+                var ips = config.getStringList("ip-whitelist." + ipwlPlayer);
                 ipWhitelist.put(ipwlPlayer, ips);
             }
         }
@@ -467,7 +467,7 @@ public class Config {
 
     public void setupExcluded(FileConfiguration config) {
         if (config.getBoolean("secure-settings.enable-excluded-players")) {
-            ConfigurationSection excludedPlayers = config.getConfigurationSection("excluded-players");
+            var excludedPlayers = config.getConfigurationSection("excluded-players");
             this.excludedPlayers = new ExcludedPlayers(
                     excludedPlayers.getStringList("admin-pass"),
                     excludedPlayers.getStringList("op-whitelist"),
@@ -480,7 +480,7 @@ public class Config {
     public UspMessages uspMessages;
 
     public void loadUspMessages(FileConfiguration message) {
-        ConfigurationSection uspmsg = message.getConfigurationSection("uspmsg");
+        var uspmsg = message.getConfigurationSection("uspmsg");
         this.uspMessages = new UspMessages(
                 getMessage(uspmsg, "consoleonly"),
                 getMessage(uspmsg, "reloaded"),
@@ -518,7 +518,7 @@ public class Config {
     public Messages messages;
 
     public void loadMsgMessages(FileConfiguration message) {
-        ConfigurationSection msg = message.getConfigurationSection("msg");
+        var msg = message.getConfigurationSection("msg");
         this.messages = new Messages(
                 getMessage(msg, "message"),
                 getMessage(msg, "incorrect"),
@@ -532,7 +532,7 @@ public class Config {
     public Titles titles;
 
     public void loadTitleMessages(FileConfiguration message) {
-        ConfigurationSection titles = message.getConfigurationSection("titles");
+        var titles = message.getConfigurationSection("titles");
         this.titles = new Titles(
                 getMessage(titles, "message").split(";"),
                 getMessage(titles, "incorrect").split(";"),
@@ -543,7 +543,7 @@ public class Config {
     public Broadcasts broadcasts;
 
     public void loadBroadcastMessages(FileConfiguration message) {
-        ConfigurationSection broadcasts = message.getConfigurationSection("broadcasts");
+        var broadcasts = message.getConfigurationSection("broadcasts");
         this.broadcasts = new Broadcasts(
                 getMessage(broadcasts, "failed"),
                 getMessage(broadcasts, "passed"),
@@ -556,7 +556,7 @@ public class Config {
     public LogMessages logMessages;
 
     public void loadLogFormats(FileConfiguration message) {
-        ConfigurationSection logMessages = message.getConfigurationSection("log-format");
+        var logMessages = message.getConfigurationSection("log-format");
         this.logMessages = new LogMessages(
                 getMessage(logMessages, "enabled"),
                 getMessage(logMessages, "disabled"),
@@ -571,7 +571,7 @@ public class Config {
     public SystemMessages systemMessages;
 
     public void loadSystemMessages(FileConfiguration message) {
-        ConfigurationSection system = message.getConfigurationSection("system");
+        var system = message.getConfigurationSection("system");
         this.systemMessages = new SystemMessages(
                 getMessage(system, "baseline-warn"),
                 getMessage(system, "baseline-default"),
@@ -597,7 +597,7 @@ public class Config {
     }
 
     public FileConfiguration getFile(String path, String fileName) {
-        File file = new File(path, fileName);
+        var file = new File(path, fileName);
         if (!file.exists()) {
             plugin.saveResource(fileName, false);
         }

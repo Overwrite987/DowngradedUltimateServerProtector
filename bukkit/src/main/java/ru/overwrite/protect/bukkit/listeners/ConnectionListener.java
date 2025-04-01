@@ -43,17 +43,17 @@ public class ConnectionListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onLogin(PlayerLoginEvent e) {
-        final Player player = e.getPlayer();
+        var player = e.getPlayer();
         player.loadData();
         runner.runAsync(() -> {
-            final String playerName = player.getName();
-            CaptureReason captureReason = plugin.checkPermissions(player);
+            var playerName = player.getName();
+            var captureReason = plugin.checkPermissions(player);
             if (api.isCaptured(playerName) && captureReason == null) {
                 api.uncapturePlayer(playerName);
                 return;
             }
             if (captureReason != null) {
-                final String ip = e.getAddress().getHostAddress();
+                var ip = e.getAddress().getHostAddress();
                 if (pluginConfig.secureSettings.enableIpWhitelist()) {
                     if (!isIPAllowed(ip, pluginConfig.accessData.ipWhitelist().get(playerName))) {
                         if (pluginConfig.excludedPlayers == null || !plugin.isExcluded(player, pluginConfig.excludedPlayers.ipWhitelist())) {
@@ -63,7 +63,7 @@ public class ConnectionListener implements Listener {
                 }
                 if (pluginConfig.sessionSettings.session() && !api.hasSession(playerName, ip)) {
                     if (pluginConfig.excludedPlayers == null || !plugin.isExcluded(player, pluginConfig.excludedPlayers.adminPass())) {
-                        ServerProtectorCaptureEvent captureEvent = new ServerProtectorCaptureEvent(player, ip, captureReason);
+                        var captureEvent = new ServerProtectorCaptureEvent(player, ip, captureReason);
                         captureEvent.callEvent();
                         if (pluginConfig.apiSettings.allowCancelCaptureEvent() && captureEvent.isCancelled()) {
                             return;
@@ -78,8 +78,8 @@ public class ConnectionListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent e) {
         runner.runAsync(() -> {
-            Player player = e.getPlayer();
-            CaptureReason captureReason = plugin.checkPermissions(player);
+            var player = e.getPlayer();
+            var captureReason = plugin.checkPermissions(player);
             if (captureReason != null) {
                 if (api.isCaptured(player)) {
                     if (pluginConfig.effectSettings.enableEffects()) {
@@ -101,7 +101,7 @@ public class ConnectionListener implements Listener {
         }
 
         outer:
-        for (final String allowedIp : allowedIps) {
+        for (var allowedIp : allowedIps) {
             int playerIpLength = playerIp.length();
             int allowedIpLength = allowedIp.length();
 
@@ -110,7 +110,7 @@ public class ConnectionListener implements Listener {
             }
 
             for (int n = 0; n < allowedIpLength; n++) {
-                char currentChar = allowedIp.charAt(n);
+                var currentChar = allowedIp.charAt(n);
                 if (currentChar == '*') {
                     return true;
                 }
@@ -132,20 +132,20 @@ public class ConnectionListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onLeave(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
+        var player = event.getPlayer();
         handlePlayerLeave(player);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onKick(PlayerKickEvent event) {
-        Player player = event.getPlayer();
+        var player = event.getPlayer();
         handlePlayerLeave(player);
     }
 
     private void handlePlayerLeave(Player player) {
-        String playerName = player.getName();
+        var playerName = player.getName();
         if (api.isCaptured(player)) {
-            for (PotionEffect effect : player.getActivePotionEffects()) {
+            for (var effect : player.getActivePotionEffects()) {
                 player.removePotionEffect(effect.getType());
             }
             if (pluginConfig.punishSettings.enableRejoin()) {

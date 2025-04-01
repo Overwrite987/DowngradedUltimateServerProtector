@@ -36,19 +36,19 @@ public class TaskManager {
             if (Bukkit.getOnlinePlayers().isEmpty()) {
                 return;
             }
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            for (var onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (pluginConfig.excludedPlayers != null && plugin.isExcluded(onlinePlayer, pluginConfig.excludedPlayers.adminPass())) {
                     continue;
                 }
                 if (api.isCaptured(onlinePlayer)) {
                     continue;
                 }
-                CaptureReason captureReason = plugin.checkPermissions(onlinePlayer);
+                var captureReason = plugin.checkPermissions(onlinePlayer);
                 if (captureReason == null) {
                     continue;
                 }
                 if (!api.isAuthorised(onlinePlayer)) {
-                    ServerProtectorCaptureEvent captureEvent = new ServerProtectorCaptureEvent(onlinePlayer, Utils.getIp(onlinePlayer), captureReason);
+                    var captureEvent = new ServerProtectorCaptureEvent(onlinePlayer, Utils.getIp(onlinePlayer), captureReason);
                     captureEvent.callEvent();
                     if (pluginConfig.apiSettings.allowCancelCaptureEvent() && captureEvent.isCancelled()) {
                         continue;
@@ -74,7 +74,7 @@ public class TaskManager {
         runner.runPeriodicalAsync(() -> {
             if (!api.isAnybodyCaptured())
                 return;
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            for (var onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (api.isCaptured(onlinePlayer) && !plugin.isAdmin(onlinePlayer.getName())) {
                     plugin.checkFail(onlinePlayer.getName(), pluginConfig.commands.notInConfig());
                 }
@@ -86,7 +86,7 @@ public class TaskManager {
         runner.runPeriodicalAsync(() -> {
             if (!api.isAnybodyCaptured())
                 return;
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            for (var onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (api.isCaptured(onlinePlayer)) {
                     onlinePlayer.sendMessage(pluginConfig.messages.message());
                     if (pluginConfig.messageSettings.sendTitle()) {
@@ -102,7 +102,7 @@ public class TaskManager {
             if (Bukkit.getOnlinePlayers().isEmpty()) {
                 return;
             }
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            for (var onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (onlinePlayer.isOp()
                         && !pluginConfig.accessData.opWhitelist().contains(onlinePlayer.getName())
                         && (pluginConfig.excludedPlayers == null || !plugin.isExcluded(onlinePlayer, pluginConfig.excludedPlayers.opWhitelist()))) {
@@ -117,8 +117,8 @@ public class TaskManager {
             if (Bukkit.getOnlinePlayers().isEmpty()) {
                 return;
             }
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                for (String blacklistedPerm : pluginConfig.accessData.blacklistedPerms()) {
+            for (var onlinePlayer : Bukkit.getOnlinePlayers()) {
+                for (var blacklistedPerm : pluginConfig.accessData.blacklistedPerms()) {
                     if (onlinePlayer.hasPermission(blacklistedPerm) &&
                             (pluginConfig.excludedPlayers == null || !plugin.isExcluded(onlinePlayer, pluginConfig.excludedPlayers.blacklistedPerms()))) {
                         plugin.checkFail(onlinePlayer.getName(), pluginConfig.commands.haveBlacklistedPerm());
@@ -132,9 +132,9 @@ public class TaskManager {
         runner.runPeriodicalAsync(() -> {
             if (!api.isAnybodyCaptured())
                 return;
-            BossbarSettings bossbarSettings = pluginConfig.bossbarSettings;
-            int time = pluginConfig.punishSettings.time();
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            var bossbarSettings = pluginConfig.bossbarSettings;
+            var time = pluginConfig.punishSettings.time();
+            for (var onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (onlinePlayer.isDead() || !api.isCaptured(onlinePlayer)) {
                     return;
                 }
@@ -142,7 +142,7 @@ public class TaskManager {
                 if (!plugin.perPlayerTime.containsKey(playerName)) {
                     plugin.perPlayerTime.put(playerName, 0);
                     if (bossbarSettings.enableBossbar()) {
-                        BossBar bossbar = Bukkit.createBossBar(
+                        var bossbar = Bukkit.createBossBar(
                                 bossbarSettings.bossbarMessage().replace("%time%", Integer.toString(time)),
                                 bossbarSettings.barColor(),
                                 bossbarSettings.barStyle());
@@ -151,10 +151,10 @@ public class TaskManager {
                     }
                 } else {
                     int newTime = plugin.perPlayerTime.compute(playerName, (k, currentTime) -> currentTime + 1);
-                    BossBar bossBar = passwordHandler.bossbars.get(playerName);
+                    var bossBar = passwordHandler.bossbars.get(playerName);
                     if (bossbarSettings.enableBossbar() && bossBar != null) {
                         bossBar.setTitle(bossbarSettings.bossbarMessage().replace("%time%", Integer.toString(time - newTime)));
-                        double percents = (time - newTime)
+                        var percents = (time - newTime)
                                 / (double) time;
                         if (percents > 0) {
                             bossBar.setProgress(percents);

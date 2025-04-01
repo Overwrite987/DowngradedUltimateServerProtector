@@ -61,11 +61,11 @@ public class Utils {
             Bukkit.getConsoleSender().sendMessage("Unable to send title. " + Arrays.toString(titleMessages));
             return;
         }
-        String title = titleMessages[0];
-        String subtitle = titleMessages.length >= 2 ? titleMessages[1] : "";
-        int fadeIn = titleMessages.length >= 3 ? Integer.parseInt(titleMessages[2]) : 10;
-        int stay = titleMessages.length >= 4 ? Integer.parseInt(titleMessages[3]) : 70;
-        int fadeOut = titleMessages.length == 5 ? Integer.parseInt(titleMessages[4]) : 20;
+        var title = titleMessages[0];
+        var subtitle = titleMessages.length >= 2 ? titleMessages[1] : "";
+        var fadeIn = titleMessages.length >= 3 ? Integer.parseInt(titleMessages[2]) : 10;
+        var stay = titleMessages.length >= 4 ? Integer.parseInt(titleMessages[3]) : 70;
+        var fadeOut = titleMessages.length == 5 ? Integer.parseInt(titleMessages[4]) : 20;
         player.sendTitle(title, subtitle, fadeIn, stay, fadeOut);
     }
 
@@ -77,16 +77,16 @@ public class Utils {
             Bukkit.getConsoleSender().sendMessage("Unable to send sound. " + Arrays.toString(soundArgs));
             return;
         }
-        Sound sound = Sound.valueOf(soundArgs[0]);
-        float volume = soundArgs.length >= 2 ? Float.parseFloat(soundArgs[1]) : 1.0f;
-        float pitch = soundArgs.length == 3 ? Float.parseFloat(soundArgs[2]) : 1.0f;
+        var sound = Sound.valueOf(soundArgs[0]);
+        var volume = soundArgs.length >= 2 ? Float.parseFloat(soundArgs[1]) : 1.0f;
+        var pitch = soundArgs.length == 3 ? Float.parseFloat(soundArgs[2]) : 1.0f;
         player.playSound(player.getLocation(), sound, volume, pitch);
     }
 
     public static final char COLOR_CHAR = '§';
 
     public static String translateAlternateColorCodes(char altColorChar, String textToTranslate) {
-        final char[] b = textToTranslate.toCharArray();
+        var b = textToTranslate.toCharArray();
 
         for (int i = 0, length = b.length - 1; i < length; ++i) {
             if (b[i] == altColorChar && isValidColorCharacter(b[i + 1])) {
@@ -112,7 +112,7 @@ public class Utils {
 
     public static void checkUpdates(Main plugin, Consumer<String> consumer) {
         plugin.runner.runDelayedAsync(() -> {
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+            try (var reader = new BufferedReader(new InputStreamReader(
                     new URL("https://raw.githubusercontent.com/Overwrite987/UltimateServerProtector/master/VERSION")
                             .openStream()))) {
                 consumer.accept(reader.readLine().trim());
@@ -129,9 +129,9 @@ public class Utils {
         if (hashTypes.isEmpty()) {
             return password;
         }
-        String encryptedPassword = password;
-        boolean salted = false;
-        for (String hashType : hashTypes) {
+        var encryptedPassword = password;
+        var salted = false;
+        for (var hashType : hashTypes) {
             switch (hashType.toUpperCase()) {
                 case "BASE64": {
                     encryptedPassword = encodeToBase64(encryptedPassword);
@@ -160,7 +160,7 @@ public class Utils {
     private static final SecureRandom random = new SecureRandom();
 
     public static String generateSalt(int length) {
-        byte[] saltBytes = new byte[(int) Math.ceil((double) length * 3 / 4)];
+        var saltBytes = new byte[(int) Math.ceil((double) length * 3 / 4)];
         random.nextBytes(saltBytes);
         return Base64.getEncoder().encodeToString(saltBytes);
     }
@@ -171,8 +171,8 @@ public class Utils {
 
     private static String encryptToHash(String str, String algorithm) {
         try {
-            MessageDigest digest = MessageDigest.getInstance(algorithm);
-            byte[] hash = digest.digest(str.getBytes(StandardCharsets.UTF_8));
+            var digest = MessageDigest.getInstance(algorithm);
+            var hash = digest.digest(str.getBytes(StandardCharsets.UTF_8));
             return bytesToHexString(hash);
         } catch (NoSuchAlgorithmException ex) {
             ex.printStackTrace();
@@ -181,9 +181,9 @@ public class Utils {
     }
 
     private static String bytesToHexString(byte[] bytes) {
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : bytes) {
-            String hex = Integer.toHexString(0xff & b);
+        var hexString = new StringBuilder();
+        for (var b : bytes) {
+            var hex = Integer.toHexString(0xff & b);
             if (hex.length() == 1) hexString.append('0');
             hexString.append(hex);
         }

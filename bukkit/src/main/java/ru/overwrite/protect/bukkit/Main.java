@@ -77,14 +77,14 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        long startTime = System.currentTimeMillis();
+        var startTime = System.currentTimeMillis();
         saveDefaultConfig();
-        final FileConfiguration config = getConfig();
-        final ConfigurationSection mainSettings = config.getConfigurationSection("main-settings");
+        var config = getConfig();
+        var mainSettings = config.getConfigurationSection("main-settings");
         setupLogger(config);
         setupProxy(config);
         loadConfigs(config);
-        PluginManager pluginManager = server.getPluginManager();
+        var pluginManager = server.getPluginManager();
         checkSafe(pluginManager);
         checkPaper();
         registerListeners(pluginManager);
@@ -95,13 +95,13 @@ public class Main extends JavaPlugin {
             new Metrics(this, 13347);
         }
         checkForUpdates(mainSettings);
-        long endTime = System.currentTimeMillis();
+        var endTime = System.currentTimeMillis();
         pluginLogger.info("Plugin started in " + (endTime - startTime) + " ms");
     }
 
     public void checkPaper() {
         if (server.getName().equals("CraftBukkit")) {
-            SystemMessages systemMessages = pluginConfig.systemMessages;
+            var systemMessages = pluginConfig.systemMessages;
             runner.runPeriodical(() -> {
                 pluginLogger.info(systemMessages.baselineWarn());
                 pluginLogger.info(systemMessages.paper1());
@@ -128,7 +128,7 @@ public class Main extends JavaPlugin {
     }
 
     public void logUnsafe() {
-        SystemMessages systemMessages = pluginConfig.systemMessages;
+        var systemMessages = pluginConfig.systemMessages;
         pluginLogger.info(systemMessages.baselineWarn());
         pluginLogger.info(systemMessages.bungeecord1());
         pluginLogger.info(systemMessages.bungeecord2());
@@ -146,8 +146,8 @@ public class Main extends JavaPlugin {
 
     public void loadConfigs(FileConfiguration config) {
         Utils.setupColorizer(config.getConfigurationSection("main-settings"));
-        final ConfigurationSection fileSettings = config.getConfigurationSection("file-settings");
-        boolean fullPath = fileSettings.getBoolean("use-full-path", false);
+        var fileSettings = config.getConfigurationSection("file-settings");
+        var fullPath = fileSettings.getBoolean("use-full-path", false);
         dataFilePath = fullPath ? fileSettings.getString("data-file-path") : getDataFolder().getAbsolutePath();
         dataFileName = fileSettings.getString("data-file");
         dataFile = pluginConfig.getFile(dataFilePath, dataFileName);
@@ -161,11 +161,11 @@ public class Main extends JavaPlugin {
     public void reloadConfigs() {
         runner.runAsync(() -> {
             reloadConfig();
-            final FileConfiguration config = getConfig();
+            var config = getConfig();
             Utils.setupColorizer(config.getConfigurationSection("main-settings"));
             messageFile = pluginConfig.getFile(getDataFolder().getAbsolutePath(), "message.yml");
-            final ConfigurationSection fileSettings = config.getConfigurationSection("file-settings");
-            boolean fullPath = fileSettings.getBoolean("use-full-path", false);
+            var fileSettings = config.getConfigurationSection("file-settings");
+            var fullPath = fileSettings.getBoolean("use-full-path", false);
             dataFilePath = fullPath ? fileSettings.getString("data-file-path") : getDataFolder().getAbsolutePath();
             dataFileName = fileSettings.getString("data-file");
             dataFile = pluginConfig.getFile(dataFilePath, dataFileName);
@@ -177,7 +177,7 @@ public class Main extends JavaPlugin {
     private void setupPluginConfig(FileConfiguration config) {
         pluginConfig.loadAccessData(config);
         pluginConfig.setupExcluded(config);
-        final FileConfiguration configFile = pluginConfig.getFile(dataFilePath, "config.yml");
+        var configFile = pluginConfig.getFile(dataFilePath, "config.yml");
         pluginConfig.loadMainSettings(config, configFile);
         pluginConfig.loadEncryptionSettings(config, configFile);
         pluginConfig.loadSecureSettings(config, configFile);
@@ -196,7 +196,7 @@ public class Main extends JavaPlugin {
         pluginConfig.loadUspMessages(messageFile);
         pluginConfig.loadLogFormats(messageFile);
         pluginConfig.loadSystemMessages(messageFile);
-        final ConfigurationSection messageSettings = config.getConfigurationSection("message-settings");
+        var messageSettings = config.getConfigurationSection("message-settings");
         if (messageSettings.getBoolean("send-titles")) {
             pluginConfig.loadTitleMessages(messageFile);
         }
@@ -218,10 +218,10 @@ public class Main extends JavaPlugin {
     public void registerCommands(PluginManager pluginManager, ConfigurationSection mainSettings) {
         if (paper && mainSettings.getBoolean("use-command", true)) {
             try {
-                CommandMap commandMap = server.getCommandMap();
-                Constructor<PluginCommand> constructor = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
+                var commandMap = server.getCommandMap();
+                var constructor = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
                 constructor.setAccessible(true);
-                PluginCommand command = constructor.newInstance(mainSettings.getString("pas-command", "pas"), this);
+                var command = constructor.newInstance(mainSettings.getString("pas-command", "pas"), this);
                 command.setExecutor(new PasCommand(this));
                 commandMap.register(getDescription().getName(), command);
             } catch (Exception ex) {
@@ -231,13 +231,13 @@ public class Main extends JavaPlugin {
         } else {
             pluginLogger.info("Command for password entering will not be registered.");
         }
-        PluginCommand uspCommand = getCommand("ultimateserverprotector");
-        UspCommand uspCommandClass = new UspCommand(this);
+        var uspCommand = getCommand("ultimateserverprotector");
+        var uspCommandClass = new UspCommand(this);
         uspCommand.setExecutor(uspCommandClass);
     }
 
     public void startTasks(FileConfiguration config) {
-        TaskManager taskManager = new TaskManager(this);
+        var taskManager = new TaskManager(this);
         taskManager.startMainCheck(pluginConfig.mainSettings.checkInterval());
         taskManager.startCapturesMessages(config);
         if (pluginConfig.punishSettings.enableTime()) {
@@ -255,13 +255,13 @@ public class Main extends JavaPlugin {
     }
 
     public void setupLogger(FileConfiguration config) {
-        File dataFolder = getDataFolder();
+        var dataFolder = getDataFolder();
         if (!dataFolder.exists() && !dataFolder.mkdirs()) {
             throw new RuntimeException("Unable to create data folder");
         }
-        ConfigurationSection fileSettings = config.getConfigurationSection("file-settings");
-        boolean fullPath = fileSettings.getBoolean("use-full-path");
-        String logFilePath = fullPath ? fileSettings.getString("log-file-path") : dataFolder.getPath();
+        var fileSettings = config.getConfigurationSection("file-settings");
+        var fullPath = fileSettings.getBoolean("use-full-path");
+        var logFilePath = fullPath ? fileSettings.getString("log-file-path") : dataFolder.getPath();
         logFile = new File(logFilePath, fileSettings.getString("log-file"));
     }
 
@@ -270,7 +270,7 @@ public class Main extends JavaPlugin {
             return;
         }
         Utils.checkUpdates(this, version -> {
-            SystemMessages systemMessages = pluginConfig.systemMessages;
+            var systemMessages = pluginConfig.systemMessages;
             pluginLogger.info(systemMessages.baselineDefault());
             if (getDescription().getVersion().equals(version)) {
                 pluginLogger.info(systemMessages.updateLatest());
@@ -288,10 +288,10 @@ public class Main extends JavaPlugin {
             return;
         }
         runner.run(() -> {
-            for (String command : commands) {
+            for (var command : commands) {
                 server.dispatchCommand(server.getConsoleSender(), command.replace("%player%", playerName));
                 if (pluginConfig.loggingSettings.loggingCommandExecution()) {
-                    LocalDateTime date = LocalDateTime.now();
+                    var date = LocalDateTime.now();
                     logToFile(pluginConfig.logMessages.command()
                             .replace("%player%", playerName)
                             .replace("%cmd%", command)
@@ -309,7 +309,7 @@ public class Main extends JavaPlugin {
                 oldEffects.put(player.getName(), player.getActivePotionEffects());
             }
             player.addPotionEffects(pluginConfig.effectSettings.effects());
-            for (PotionEffect effect : pluginConfig.effectSettings.effects()) {
+            for (var effect : pluginConfig.effectSettings.effects()) {
                 player.addPotionEffect(effect);
             }
         }, player);
@@ -317,13 +317,13 @@ public class Main extends JavaPlugin {
 
     public void removeEffects(Player player) {
         runner.runPlayer(() -> {
-            for (PotionEffect effect : player.getActivePotionEffects()) {
+            for (var effect : player.getActivePotionEffects()) {
                 player.removePotionEffect(effect.getType());
             }
             if (oldEffects.isEmpty()) {
                 return;
             }
-            Collection<PotionEffect> effects = oldEffects.get(player.getName());
+            var effects = oldEffects.get(player.getName());
             if (effects != null) {
                 player.addPotionEffects(effects);
             }
@@ -333,7 +333,7 @@ public class Main extends JavaPlugin {
     public void applyHide(Player player) {
         if (pluginConfig.blockingSettings.hideOnEntering()) {
             runner.runPlayer(() -> {
-                for (Player onlinePlayer : server.getOnlinePlayers()) {
+                for (var onlinePlayer : server.getOnlinePlayers()) {
                     if (!onlinePlayer.equals(player)) {
                         onlinePlayer.hidePlayer(this, player);
                     }
@@ -342,7 +342,7 @@ public class Main extends JavaPlugin {
         }
         if (pluginConfig.blockingSettings.hideOtherOnEntering()) {
             runner.runPlayer(() -> {
-                for (Player onlinePlayer : server.getOnlinePlayers()) {
+                for (var onlinePlayer : server.getOnlinePlayers()) {
                     player.hidePlayer(this, onlinePlayer);
                 }
             }, player);
@@ -362,7 +362,7 @@ public class Main extends JavaPlugin {
         if (player.hasPermission("serverprotector.protect")) {
             return new CaptureReason("serverprotector.protect");
         }
-        for (String perm : pluginConfig.accessData.perms()) {
+        for (var perm : pluginConfig.accessData.perms()) {
             if (player.hasPermission(perm)) {
                 return new CaptureReason(perm);
             }
@@ -384,7 +384,7 @@ public class Main extends JavaPlugin {
             if (pluginConfig.mainSettings.papiSupport()) {
                 msg = PAPIUtils.parsePlaceholders(player, msg);
             }
-            for (Player onlinePlayer : server.getOnlinePlayers()) {
+            for (var onlinePlayer : server.getOnlinePlayers()) {
                 if (onlinePlayer.hasPermission("serverprotector.admin") && player != onlinePlayer) {
                     onlinePlayer.sendMessage(msg);
                 }
@@ -412,7 +412,7 @@ public class Main extends JavaPlugin {
     }
 
     public void logToFile(String message) {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(logFile, true))) {
+        try (var bufferedWriter = new BufferedWriter(new FileWriter(logFile, true))) {
             bufferedWriter.write(message);
             bufferedWriter.newLine();
         } catch (IOException ex) {
@@ -421,13 +421,13 @@ public class Main extends JavaPlugin {
     }
 
     public boolean isCalledFromAllowedApplication() {
-        StackWalker walker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
+        var walker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
 
-        List<Class<?>> callStack = walker.walk(frames ->
+        var callStack = walker.walk(frames ->
                 frames.map(StackWalker.StackFrame::getDeclaringClass)
                         .collect(Collectors.toList())
         );
-        String className = callStack.get(2).getName();
+        var className = callStack.get(2).getName();
 
         if (className.startsWith("ru.overwrite.protect.bukkit")) {
             return true;
@@ -436,7 +436,7 @@ public class Main extends JavaPlugin {
             pluginLogger.warn("Found illegal method call from " + className);
             return false;
         }
-        for (String allowed : pluginConfig.apiSettings.allowedAuthApiCallsPackages()) {
+        for (var allowed : pluginConfig.apiSettings.allowedAuthApiCallsPackages()) {
             if (className.startsWith(allowed)) {
                 return true;
             }
@@ -451,7 +451,7 @@ public class Main extends JavaPlugin {
             logEnableDisable(pluginConfig.logMessages.disabled(), LocalDateTime.now());
         }
         if (pluginConfig.messageSettings.enableBroadcasts()) {
-            for (Player onlinePlayer : server.getOnlinePlayers()) {
+            for (var onlinePlayer : server.getOnlinePlayers()) {
                 if (onlinePlayer.hasPermission("serverprotector.admin") && messageFile != null) {
                     onlinePlayer.sendMessage(pluginConfig.broadcasts.disabled());
                 }
@@ -459,7 +459,7 @@ public class Main extends JavaPlugin {
         }
         runner.cancelTasks();
         if (pluginMessage != null) {
-            Messenger messenger = server.getMessenger();
+            var messenger = server.getMessenger();
             messenger.unregisterOutgoingPluginChannel(this);
             messenger.unregisterIncomingPluginChannel(this);
         }

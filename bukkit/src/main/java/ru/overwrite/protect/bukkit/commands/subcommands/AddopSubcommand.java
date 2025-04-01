@@ -19,10 +19,10 @@ public class AddopSubcommand extends AbstractSubCommand {
     public boolean execute(CommandSender sender, String label, String[] args) {
         UspMessages uspMessages = pluginConfig.uspMessages;
         if (args.length > 1) {
-            String nickname = args[1];
+            var nickname = args[1];
 
             if (Utils.SUB_VERSION >= 16) {
-                OfflinePlayer targetPlayer = Bukkit.getOfflinePlayerIfCached(nickname);
+                var targetPlayer = Bukkit.getOfflinePlayerIfCached(nickname);
                 if (targetPlayer == null) {
                     sender.sendMessage(uspMessages.playerNotFound().replace("%nick%", nickname));
                     return true;
@@ -30,7 +30,7 @@ public class AddopSubcommand extends AbstractSubCommand {
                 nickname = targetPlayer.getName();
             }
 
-            List<String> whitelist = pluginConfig.accessData.opWhitelist();
+            var whitelist = pluginConfig.accessData.opWhitelist();
             whitelist.add(nickname);
             plugin.getConfig().set("op-whitelist", whitelist);
             plugin.saveConfig();

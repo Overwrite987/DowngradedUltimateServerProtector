@@ -53,7 +53,7 @@ public class UspCommand implements TabExecutor {
             sendHelp(sender, label);
             return true;
         }
-        AbstractSubCommand subCommand = subCommands.get(args[0].toLowerCase());
+        var subCommand = subCommands.get(args[0].toLowerCase());
         if (subCommand != null) {
             if (subCommand.adminCommand) {
                 if (!pluginConfig.mainSettings.enableAdminCommands()) {
@@ -80,7 +80,7 @@ public class UspCommand implements TabExecutor {
     }
 
     private void sendHelp(CommandSender sender, String label) {
-        UspMessages uspMessages = pluginConfig.uspMessages;
+        var uspMessages = pluginConfig.uspMessages;
         sendCmdMessage(sender, uspMessages.usage(), label, "protect");
         sendCmdMessage(sender, uspMessages.usageLogout(), label, "protect");
         if (!sender.hasPermission("admin")) {
@@ -136,7 +136,7 @@ public class UspCommand implements TabExecutor {
 
     private List<String> getResult(String[] args, List<String> completions) {
         final List<String> result = new ArrayList<>();
-        for (String c : completions) {
+        for (var c : completions) {
             if (StringUtil.startsWithIgnoreCase(c, args[args.length - 1])) {
                 result.add(c);
             }

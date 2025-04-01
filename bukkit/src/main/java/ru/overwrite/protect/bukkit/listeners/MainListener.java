@@ -34,7 +34,7 @@ public class MainListener implements Listener {
         if (pluginConfig.blockingSettings.allowOrientationChange() && hasChangedOrientation(e.getFrom(), e.getTo()) && !hasChangedPosition(e.getFrom(), e.getTo())) {
             return;
         }
-        Player player = e.getPlayer();
+        var player = e.getPlayer();
         api.handleInteraction(player, e);
     }
 
@@ -48,19 +48,19 @@ public class MainListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent e) {
-        Player player = e.getPlayer();
+        var player = e.getPlayer();
         api.handleInteraction(player, e);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
-        Player player = e.getPlayer();
+        var player = e.getPlayer();
         api.handleInteraction(player, e);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onItemDrop(PlayerDropItemEvent e) {
-        Player player = e.getPlayer();
+        var player = e.getPlayer();
         if (pluginConfig.blockingSettings.blockItemDrop()) {
             api.handleInteraction(player, e);
         }
@@ -95,7 +95,7 @@ public class MainListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onInventoryOpen(InventoryOpenEvent e) {
-        Player player = (Player) e.getPlayer();
+        var player = (Player) e.getPlayer();
         if (pluginConfig.blockingSettings.blockInventoryOpen()) {
             api.handleInteraction(player, e);
         }

@@ -19,12 +19,12 @@ public class RebootSubcommand extends AbstractSubCommand {
         api.clearCaptured();
         api.clearSaved();
         api.clearSessions();
-        for (String playerName : passwordHandler.bossbars.keySet()) {
+        for (var playerName : passwordHandler.bossbars.keySet()) {
             passwordHandler.bossbars.get(playerName).removeAll();
         }
         passwordHandler.bossbars.clear();
         passwordHandler.attempts.clear();
-        FileConfiguration newconfig = plugin.getConfig();
+        var newconfig = plugin.getConfig();
         plugin.startTasks(newconfig);
         sender.sendMessage(pluginConfig.uspMessages.rebooted());
         return true;

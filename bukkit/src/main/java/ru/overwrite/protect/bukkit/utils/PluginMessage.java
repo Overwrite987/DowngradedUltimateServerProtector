@@ -20,11 +20,11 @@ public class PluginMessage implements PluginMessageListener {
     public void onPluginMessageReceived(String channel, @NotNull Player player, byte[] message) {
         if (!channel.equals("BungeeCord"))
             return;
-        ByteArrayDataInput input = ByteStreams.newDataInput(message);
-        String subchannel = input.readUTF();
+        var input = ByteStreams.newDataInput(message);
+        var subchannel = input.readUTF();
         if (subchannel.equalsIgnoreCase("serverprotector")) {
-            String msg = input.readUTF();
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            var msg = input.readUTF();
+            for (var onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (onlinePlayer.hasPermission("serverprotector.admin")) {
                     onlinePlayer.sendMessage(msg);
                 }
@@ -33,7 +33,7 @@ public class PluginMessage implements PluginMessageListener {
     }
 
     public void sendCrossProxy(Player player, String message) {
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        var out = ByteStreams.newDataOutput();
         out.writeUTF("Forward");
         out.writeUTF("ALL");
         out.writeUTF("serverprotector");

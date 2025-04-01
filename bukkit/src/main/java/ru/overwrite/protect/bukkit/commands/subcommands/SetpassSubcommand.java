@@ -17,12 +17,12 @@ public class SetpassSubcommand extends AbstractSubCommand {
 
     @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
-        UspMessages uspMessages = pluginConfig.uspMessages;
+        var uspMessages = pluginConfig.uspMessages;
         if (args.length > 1) {
-            String nickname = args[1];
+            var nickname = args[1];
 
             if (Utils.SUB_VERSION >= 16) {
-                OfflinePlayer targetPlayer = Bukkit.getOfflinePlayerIfCached(nickname);
+                var targetPlayer = Bukkit.getOfflinePlayerIfCached(nickname);
                 if (targetPlayer == null) {
                     sender.sendMessage(uspMessages.playerNotFound().replace("%nick%", nickname));
                     return true;
@@ -44,12 +44,12 @@ public class SetpassSubcommand extends AbstractSubCommand {
     }
 
     private void addAdmin(String nick, String pas) {
-        FileConfiguration dataFile = pluginConfig.getFile(plugin.dataFilePath, plugin.dataFileName);
-        EncryptionSettings encryptionSettings = pluginConfig.encryptionSettings;
+        var dataFile = pluginConfig.getFile(plugin.dataFilePath, plugin.dataFileName);
+        var encryptionSettings = pluginConfig.encryptionSettings;
         if (!encryptionSettings.enableEncryption()) {
             dataFile.set("data." + nick + ".pass", pas);
         } else if (encryptionSettings.autoEncryptPasswords()) {
-            String encryptedPas = Utils.encryptPassword(pas, Utils.generateSalt(encryptionSettings.saltLength()), encryptionSettings.encryptMethods());
+            var encryptedPas = Utils.encryptPassword(pas, Utils.generateSalt(encryptionSettings.saltLength()), encryptionSettings.encryptMethods());
             dataFile.set("data." + nick + ".encrypted-pass", encryptedPas);
         } else {
             dataFile.set("data." + nick + ".encrypted-pass", pas);
