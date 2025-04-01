@@ -8,12 +8,10 @@ import ru.overwrite.protect.bukkit.api.events.ServerProtectorPasswordEnterEvent;
 import ru.overwrite.protect.bukkit.api.events.ServerProtectorPasswordFailEvent;
 import ru.overwrite.protect.bukkit.api.events.ServerProtectorPasswordSuccessEvent;
 import ru.overwrite.protect.bukkit.configuration.Config;
-import ru.overwrite.protect.bukkit.configuration.data.EncryptionSettings;
 import ru.overwrite.protect.bukkit.utils.Utils;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PasswordHandler {

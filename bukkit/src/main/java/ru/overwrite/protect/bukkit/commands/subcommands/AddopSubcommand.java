@@ -1,13 +1,10 @@
 package ru.overwrite.protect.bukkit.commands.subcommands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import ru.overwrite.protect.bukkit.Main;
 import ru.overwrite.protect.bukkit.configuration.data.UspMessages;
 import ru.overwrite.protect.bukkit.utils.Utils;
-
-import java.util.List;
 
 public class AddopSubcommand extends AbstractSubCommand {
 

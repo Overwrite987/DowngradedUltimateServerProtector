@@ -1,7 +1,6 @@
 package ru.overwrite.protect.bukkit.commands.subcommands;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import ru.overwrite.protect.bukkit.Main;
 
 

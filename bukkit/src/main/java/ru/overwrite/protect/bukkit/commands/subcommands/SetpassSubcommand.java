@@ -1,12 +1,8 @@
 package ru.overwrite.protect.bukkit.commands.subcommands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import ru.overwrite.protect.bukkit.Main;
-import ru.overwrite.protect.bukkit.configuration.data.EncryptionSettings;
-import ru.overwrite.protect.bukkit.configuration.data.UspMessages;
 import ru.overwrite.protect.bukkit.utils.Utils;
 
 public class SetpassSubcommand extends AbstractSubCommand {

@@ -3,7 +3,6 @@ package ru.overwrite.protect.bukkit.commands.subcommands;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import ru.overwrite.protect.bukkit.Main;
-import ru.overwrite.protect.bukkit.configuration.data.SystemMessages;
 import ru.overwrite.protect.bukkit.utils.Utils;
 
 import java.io.BufferedInputStream;
@@ -11,7 +10,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.net.URLConnection;
 
 public class UpdateSubcommand extends AbstractSubCommand {
 

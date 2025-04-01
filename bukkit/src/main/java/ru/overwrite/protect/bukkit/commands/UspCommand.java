@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import ru.overwrite.protect.bukkit.Main;
 import ru.overwrite.protect.bukkit.commands.subcommands.*;
 import ru.overwrite.protect.bukkit.configuration.Config;
-import ru.overwrite.protect.bukkit.configuration.data.UspMessages;
 
 import java.util.ArrayList;
 import java.util.HashMap;

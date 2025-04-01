@@ -4,8 +4,6 @@ import org.bukkit.command.CommandSender;
 import ru.overwrite.protect.bukkit.Main;
 import ru.overwrite.protect.bukkit.configuration.data.UspMessages;
 
-import java.util.List;
-
 public class AddipSubcommand extends AbstractSubCommand {
 
     public AddipSubcommand(Main plugin) {
